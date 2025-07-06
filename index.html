@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leitor de Bíblia</title>
+    
+    
     <style>
         * {
             margin: 0;
@@ -13,9 +16,9 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #cae09e 0%, #304904 100%);
+            background: linear-gradient(135deg, #1a1a40 0%, #1e5128 100%);
             min-height: 100vh;
-            color: #333;
+            color: #8d9d31;
             line-height: 1.6;
         }
 
@@ -28,14 +31,14 @@
         .header {
             text-align: center;
             margin-bottom: 25px;
-            color: white;
+            color: #f4ffe2;
             padding: 20px 10px;
         }
 
         .header h1 {
             font-size: 2.2em;
             margin-bottom: 8px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
         }
 
         .header p {
@@ -44,7 +47,7 @@
         }
 
         .navigation {
-            background: rgba(255, 255, 255, 0.95);
+            background: linear-gradient(135deg,#1a5f29 0%,#1a1a40 100%);
             border-radius: 12px;
             box-shadow: 0 6px 25px rgba(0,0,0,0.15);
             padding: 20px;
@@ -60,7 +63,7 @@
             font-size: 1.1em;
             font-weight: bold;
             margin-bottom: 12px;
-            color: #556b2f;
+            color: #ffffff;
         }
 
         .testament-selector {
@@ -72,9 +75,9 @@
         .testament-btn {
             flex: 1;
             padding: 14px 20px;
-            border: 2px solid #6b8e23;
+            border: 2px solid #829b51;
             background: white;
-            color: #6b8e23;
+            color:#082032;
             border-radius: 25px;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -85,13 +88,13 @@
         }
 
         .testament-btn:hover {
-            background: #6b8e23;
+            background: #151614;
             color: white;
             transform: translateY(-1px);
         }
 
         .testament-btn.active {
-            background: #6b8e23;
+            background: #80a040;
             color: white;
             box-shadow: 0 4px 12px rgba(107, 142, 35, 0.3);
         }
@@ -105,7 +108,7 @@
 
         .book-card {
             background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            border: 1px solid #dee2e6;
+            border: 1px solid #349f28;
             border-radius: 8px;
             padding: 16px 12px;
             cursor: pointer;
@@ -130,7 +133,7 @@
         }
 
         .book-card.selected {
-            background: linear-gradient(135deg, #6b8e23 0%, #556b2f 100%);
+            background: linear-gradient(135deg, #3d5425 0%, #6fa611 100%);
             color: white;
             border-color: #556b2f;
             box-shadow: 0 4px 15px rgba(107, 142, 35, 0.3);
@@ -138,7 +141,7 @@
 
         .book-card.loading {
             background: linear-gradient(135deg, #ffc107 0%, #ffb300 100%);
-            color: white;
+            color: rgb(255, 255, 255);
             border-color: #ff8f00;
         }
 
@@ -474,18 +477,23 @@
         ::-webkit-scrollbar-thumb:hover {
             background: rgba(107, 142, 35, 0.8);
         }
-    </style>
-</head>
+
+</style>
+
+    </head>
 <body>
+
     <div class="container">
         <div class="header">
-            <h1>📖A mensagem da ADMEC</h1>
-            <p>Bíblia a mensagem de Eugene H. Peterson.</p>
+                <img src="img/40anos.png" alt="Descrição da imagem">
+            <h1>A mensagem na ADMEC</h1>
+            <p>Distribuição da Bíblia a Mensagem sem fins lucrativos. A Editora Vida é responsável pela publicação da tradução da Bíblia A Mensagem em português.</p>
+            
         </div>
 
         <div class="navigation">
             <div class="nav-section">
-                <div class="nav-title">Testamento</div>
+                <div class="nav-title">Escolha um testamento</div>
                 <div class="testament-selector">
                     <button class="testament-btn active" data-testament="old">Antigo Testamento</button>
                     <button class="testament-btn" data-testament="new">Novo Testamento</button>
@@ -493,7 +501,7 @@
             </div>
 
             <div class="nav-section">
-                <div class="nav-title">Livros</div>
+                <div class="nav-title">Escolha um livro</div>
                 <div class="search-box">
                     <input type="text" class="search-input" id="bookSearch" placeholder="Pesquisar livro...">
                 </div>

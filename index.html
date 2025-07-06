@@ -120,6 +120,7 @@
             justify-content: center;
             touch-action: manipulation;
             -webkit-tap-highlight-color: transparent;
+            position: relative;
         }
 
         .book-card:hover {
@@ -133,6 +134,31 @@
             color: white;
             border-color: #556b2f;
             box-shadow: 0 4px 15px rgba(107, 142, 35, 0.3);
+        }
+
+        .book-card.loading {
+            background: linear-gradient(135deg, #ffc107 0%, #ffb300 100%);
+            color: white;
+            border-color: #ff8f00;
+        }
+
+        .book-card.loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: 8px;
+            width: 12px;
+            height: 12px;
+            border: 2px solid transparent;
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            transform: translateY(-50%);
+        }
+
+        @keyframes spin {
+            0% { transform: translateY(-50%) rotate(0deg); }
+            100% { transform: translateY(-50%) rotate(360deg); }
         }
 
         .chapter-selector {
@@ -276,22 +302,6 @@
             box-shadow: 0 0 12px rgba(107, 142, 35, 0.3);
         }
 
-        .progress-bar {
-            width: 100%;
-            height: 6px;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 3px;
-            overflow: hidden;
-            margin-top: 12px;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #90EE90, #6b8e23);
-            transition: width 0.3s ease;
-            border-radius: 3px;
-        }
-
         .status {
             text-align: center;
             padding: 16px;
@@ -383,7 +393,7 @@
 
             .search-input {
                 padding: 12px 16px;
-                font-size: 16px; /* Evita zoom no iOS */
+                font-size: 16px;
             }
         }
 
@@ -473,13 +483,6 @@
             <p>Bíblia a mensagem de Eugene H. Peterson.</p>
         </div>
 
-        <div id="loadingStatus" class="status info">
-            <div id="progressBar" class="progress-bar">
-                <div id="progressFill" class="progress-fill" style="width: 0%;"></div>
-            </div>
-            <div id="statusText">Carregando livros da Bíblia...</div>
-        </div>
-
         <div class="navigation">
             <div class="nav-section">
                 <div class="nav-title">Testamento</div>
@@ -509,8 +512,8 @@
 
         <div class="content" id="content">
             <div class="loading">
-                <h3>Carregando conteúdo...</h3>
-                <p>Aguarde enquanto os livros são carregados.</p>
+                <h3>Selecione um livro para começar a leitura</h3>
+                <p>Escolha um testamento e depois clique em um livro para carregar seus capítulos.</p>
             </div>
         </div>
 
@@ -522,138 +525,169 @@
 
     <script>
         // CONFIGURAÇÃO - Altere aqui o caminho para suas pastas
-        const BIBLE_PATH = './biblia/'; // Caminho para a pasta principal da bíblia
+        const BIBLE_PATH = './biblia/';
         const OLD_TESTAMENT_PATH = 'old-testament/';
         const NEW_TESTAMENT_PATH = 'new-testament/';
 
-        // Estrutura para armazenar os dados da Bíblia
+        // Estrutura para armazenar os dados da Bíblia (agora carregamento sob demanda)
         let bibleData = {
             old: {},
             new: {}
         };
 
+        // Cache para evitar recarregamentos desnecessários
+        let loadedBooks = new Set();
+
         let currentTestament = 'old';
         let currentBook = null;
         let currentChapter = null;
 
-        // Listas dos livros corrigidas para corresponder aos nomes das pastas
-        const oldTestamentBooks = [
-            'genesis', 'exodo', 'levitico', 'numeros', 'deuteronomio',
-            'josue', 'juizes', 'rute', '1samuel', '2samuel',
-            '1reis', '2reis', '1cronicas', '2cronicas',
-            'esdras', 'neemias', 'ester', 'jo', 'salmos',
-            'proverbios', 'eclesiastes', 'cantares', 'isaias',
-            'jeremias', 'lamentacoes', 'ezequiel', 'daniel',
-            'oseias', 'joel', 'amos', 'obadias', 'jonas',
-            'miqueias', 'naum', 'habacuque', 'sofonias', 'ageu',
-            'zacarias', 'malaquias'
-        ];
-
-        const newTestamentBooks = [
-            'mateus', 'marcos', 'lucas', 'joao', 'atos',
-            'romanos', '1corintios', '2corintios', 'galatas',
-            'efesios', 'filipenses', 'colossenses', '1tessalonicenses',
-            '2tessalonicenses', '1timoteo', '2timoteo', 'tito',
-            'filemom', 'hebreus', 'tiago', '1pedro', '2pedro',
-            '1joao', '2joao', '3joao', 'judas', 'apocalipse'
-        ];
-
-        // Função para carregar automaticamente todos os livros
-        async function loadAllBooks() {
-            const statusElement = document.getElementById('loadingStatus');
-            const progressBar = document.getElementById('progressFill');
-            const statusText = document.getElementById('statusText');
-            
-            try {
-                let totalBooks = oldTestamentBooks.length + newTestamentBooks.length;
-                let loadedBooks = 0;
-                
-                // Carregar Antigo Testamento
-                statusText.textContent = 'Carregando Antigo Testamento...';
-                for (const bookName of oldTestamentBooks) {
-                    try {
-                        await loadBook('old', bookName);
-                        loadedBooks++;
-                        updateProgress(loadedBooks, totalBooks, statusText, progressBar);
-                    } catch (error) {
-                        console.warn(`Erro ao carregar livro ${bookName}:`, error);
-                    }
-                }
-                
-                // Carregar Novo Testamento
-                statusText.textContent = 'Carregando Novo Testamento...';
-                for (const bookName of newTestamentBooks) {
-                    try {
-                        await loadBook('new', bookName);
-                        loadedBooks++;
-                        updateProgress(loadedBooks, totalBooks, statusText, progressBar);
-                    } catch (error) {
-                        console.warn(`Erro ao carregar livro ${bookName}:`, error);
-                    }
-                }
-                
-                // Finalizar carregamento
-                statusElement.className = 'status success';
-                statusText.textContent = `${loadedBooks} livros carregados com sucesso!`;
-                
-                setTimeout(() => {
-                    statusElement.style.display = 'none';
-                    updateBooksGrid();
-                    updateContent();
-                }, 1500);
-                
-            } catch (error) {
-                statusElement.className = 'status error';
-                statusText.textContent = 'Erro ao carregar os livros da Bíblia';
-                console.error('Erro no carregamento:', error);
+        // Listas dos livros com nomes formatados
+        const bookNames = {
+            old: {
+                'genesis': 'Gênesis',
+                'exodo': 'Êxodo',
+                'levitico': 'Levítico',
+                'numeros': 'Números',
+                'deuteronomio': 'Deuteronômio',
+                'josue': 'Josué',
+                'juizes': 'Juízes',
+                'rute': 'Rute',
+                '1samuel': '1 Samuel',
+                '2samuel': '2 Samuel',
+                '1reis': '1 Reis',
+                '2reis': '2 Reis',
+                '1cronicas': '1 Crônicas',
+                '2cronicas': '2 Crônicas',
+                'esdras': 'Esdras',
+                'neemias': 'Neemias',
+                'ester': 'Ester',
+                'jo': 'Jó',
+                'salmos': 'Salmos',
+                'proverbios': 'Provérbios',
+                'eclesiastes': 'Eclesiastes',
+                'cantares': 'Cantares',
+                'isaias': 'Isaías',
+                'jeremias': 'Jeremias',
+                'lamentacoes': 'Lamentações',
+                'ezequiel': 'Ezequiel',
+                'daniel': 'Daniel',
+                'oseias': 'Oséias',
+                'joel': 'Joel',
+                'amos': 'Amós',
+                'obadias': 'Obadias',
+                'jonas': 'Jonas',
+                'miqueias': 'Miquéias',
+                'naum': 'Naum',
+                'habacuque': 'Habacuque',
+                'sofonias': 'Sofonias',
+                'ageu': 'Ageu',
+                'zacarias': 'Zacarias',
+                'malaquias': 'Malaquias'
+            },
+            new: {
+                'mateus': 'Mateus',
+                'marcos': 'Marcos',
+                'lucas': 'Lucas',
+                'joao': 'João',
+                'atos': 'Atos',
+                'romanos': 'Romanos',
+                '1corintios': '1 Coríntios',
+                '2corintios': '2 Coríntios',
+                'galatas': 'Gálatas',
+                'efesios': 'Efésios',
+                'filipenses': 'Filipenses',
+                'colossenses': 'Colossenses',
+                '1tessalonicenses': '1 Tessalonicenses',
+                '2tessalonicenses': '2 Tessalonicenses',
+                '1timoteo': '1 Timóteo',
+                '2timoteo': '2 Timóteo',
+                'tito': 'Tito',
+                'filemom': 'Filemom',
+                'hebreus': 'Hebreus',
+                'tiago': 'Tiago',
+                '1pedro': '1 Pedro',
+                '2pedro': '2 Pedro',
+                '1joao': '1 João',
+                '2joao': '2 João',
+                '3joao': '3 João',
+                'judas': 'Judas',
+                'apocalipse': 'Apocalipse'
             }
-        }
+        };
 
-        async function loadBook(testament, bookName) {
-            const testamentPath = testament === 'old' ? OLD_TESTAMENT_PATH : NEW_TESTAMENT_PATH;
-            const bookPath = `${BIBLE_PATH}${testamentPath}${bookName}/`;
-            
-            const book = {
-                name: formatBookName(bookName),
-                chapters: []
-            };
-            
-            // Tentar carregar capítulos
-            for (let chapterNum = 1; chapterNum <= 150; chapterNum++) {
-                try {
-                    const chapterPath = `${bookPath}${chapterNum}.json`;
-                    const response = await fetch(chapterPath);
-                    
-                    if (response.ok) {
-                        const chapterData = await response.json();
-                        book.chapters[chapterNum - 1] = chapterData;
-                    } else {
-                        // Se não conseguir carregar, assumir que chegou ao fim dos capítulos
+        // Função para carregar um livro específico sob demanda
+        async function loadBook(testament, bookKey) {
+            // Verificar se o livro já foi carregado
+            const bookId = `${testament}-${bookKey}`;
+            if (loadedBooks.has(bookId)) {
+                return bibleData[testament][bookKey];
+            }
+
+            // Mostrar indicador de carregamento
+            const bookCard = document.querySelector(`[data-book="${bookKey}"]`);
+            if (bookCard) {
+                bookCard.classList.add('loading');
+            }
+
+            try {
+                const testamentPath = testament === 'old' ? OLD_TESTAMENT_PATH : NEW_TESTAMENT_PATH;
+                const bookPath = `${BIBLE_PATH}${testamentPath}${bookKey}/`;
+                
+                const book = {
+                    name: bookNames[testament][bookKey] || formatBookName(bookKey),
+                    chapters: []
+                };
+                
+                // Carregar capítulos
+                for (let chapterNum = 1; chapterNum <= 150; chapterNum++) {
+                    try {
+                        const chapterPath = `${bookPath}${chapterNum}.json`;
+                        const response = await fetch(chapterPath);
+                        
+                        if (response.ok) {
+                            const chapterData = await response.json();
+                            book.chapters[chapterNum - 1] = chapterData;
+                        } else {
+                            break;
+                        }
+                    } catch (error) {
                         break;
                     }
-                } catch (error) {
-                    // Parar de tentar carregar mais capítulos
-                    break;
                 }
-            }
-            
-            // Só adicionar o livro se tiver pelo menos um capítulo
-            if (book.chapters.length > 0) {
-                bibleData[testament][bookName] = book; // Usar bookName original como chave
+                
+                // Só adicionar o livro se tiver pelo menos um capítulo
+                if (book.chapters.length > 0) {
+                    bibleData[testament][bookKey] = book;
+                    loadedBooks.add(bookId);
+                    
+                    // Remover indicador de carregamento e mostrar sucesso
+                    if (bookCard) {
+                        bookCard.classList.remove('loading');
+                    }
+                    
+                    return book;
+                } else {
+                    throw new Error('Nenhum capítulo encontrado');
+                }
+                
+            } catch (error) {
+                console.error(`Erro ao carregar livro ${bookKey}:`, error);
+                
+                // Remover indicador de carregamento e mostrar erro
+                if (bookCard) {
+                    bookCard.classList.remove('loading');
+                    bookCard.style.opacity = '0.5';
+                }
+                
+                throw error;
             }
         }
 
         function formatBookName(bookName) {
-            // Melhor formatação dos nomes dos livros
             return bookName
-                .replace(/([0-9]+)([a-z])/g, '$1 $2') // Separar números de letras
-                .replace(/\b\w/g, l => l.toUpperCase()); // Primeira letra maiúscula
-        }
-
-        function updateProgress(loaded, total, statusText, progressBar) {
-            const percentage = (loaded / total) * 100;
-            progressBar.style.width = percentage + '%';
-            statusText.textContent = `Carregando livros... ${loaded}/${total}`;
+                .replace(/([0-9]+)([a-z])/g, '$1 $2')
+                .replace(/\b\w/g, l => l.toUpperCase());
         }
 
         // Event listeners
@@ -699,41 +733,55 @@
 
         function updateBooksGrid() {
             const grid = document.getElementById('booksGrid');
-            const books = bibleData[currentTestament];
+            const books = bookNames[currentTestament];
             
-            if (!books || Object.keys(books).length === 0) {
-                grid.innerHTML = '<p>Nenhum livro disponível para este testamento.</p>';
-                return;
-            }
-
             grid.innerHTML = '';
             
             Object.keys(books).forEach(bookKey => {
-                const book = books[bookKey];
                 const bookCard = document.createElement('button');
                 bookCard.className = 'book-card';
-                bookCard.textContent = book.name;
+                bookCard.textContent = books[bookKey];
+                bookCard.dataset.book = bookKey;
                 bookCard.addEventListener('click', () => selectBook(bookKey));
                 grid.appendChild(bookCard);
             });
         }
 
-        function selectBook(bookKey) {
-            currentBook = bookKey;
-            currentChapter = null;
-            
+        async function selectBook(bookKey) {
+            // Limpar seleção anterior
             document.querySelectorAll('.book-card').forEach(card => {
                 card.classList.remove('selected');
-                if (card.textContent === bibleData[currentTestament][bookKey].name) {
-                    card.classList.add('selected');
-                }
             });
 
-            updateChapterSelector();
-            document.getElementById('chapterSection').style.display = 'block';
-            
-            if (bibleData[currentTestament][currentBook].chapters.length > 0) {
-                selectChapter(1);
+            // Marcar como selecionado
+            const bookCard = document.querySelector(`[data-book="${bookKey}"]`);
+            if (bookCard) {
+                bookCard.classList.add('selected');
+            }
+
+            try {
+                // Carregar o livro se ainda não foi carregado
+                await loadBook(currentTestament, bookKey);
+                
+                currentBook = bookKey;
+                currentChapter = null;
+                
+                updateChapterSelector();
+                document.getElementById('chapterSection').style.display = 'block';
+                
+                // Selecionar o primeiro capítulo automaticamente
+                if (bibleData[currentTestament][currentBook].chapters.length > 0) {
+                    selectChapter(1);
+                }
+                
+            } catch (error) {
+                const content = document.getElementById('content');
+                content.innerHTML = `
+                    <div class="error">
+                        <h3>Erro ao carregar o livro</h3>
+                        <p>Não foi possível carregar o livro ${bookNames[currentTestament][bookKey]}. Verifique se os arquivos estão no local correto.</p>
+                    </div>
+                `;
             }
         }
 
@@ -772,7 +820,12 @@
             const content = document.getElementById('content');
             
             if (!currentBook || !currentChapter) {
-                content.innerHTML = '<div class="loading"><h3>Selecione um livro e capítulo para ler</h3></div>';
+                content.innerHTML = `
+                    <div class="loading">
+                        <h3>Selecione um livro e capítulo para ler</h3>
+                        <p>Escolha um livro na lista acima para começar a leitura.</p>
+                    </div>
+                `;
                 return;
             }
 
@@ -848,7 +901,10 @@
         });
 
         // Inicializar aplicação
-        window.addEventListener('load', loadAllBooks);
+        window.addEventListener('load', function() {
+            updateBooksGrid();
+            updateContent();
+        });
     </script>
 </body>
 </html>

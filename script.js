@@ -1,5 +1,4 @@
-
-        // Configuração dos caminhos
+// Configuração dos caminhos
         const BIBLE_PATH = './biblia/';
         const OLD_TESTAMENT_PATH = 'old-testament/';
         const NEW_TESTAMENT_PATH = 'new-testament/';
@@ -10,6 +9,28 @@
         let currentTestament = 'old';
         let currentBook = null;
         let currentChapter = null;
+
+        // Metadados com número de capítulos por livro (otimização)
+        const bookMetadata = {
+            old: {
+                'genesis': 50, 'exodo': 40, 'levitico': 27, 'numeros': 36, 'deuteronomio': 34,
+                'josue': 24, 'juizes': 21, 'rute': 4, '1samuel': 31, '2samuel': 24,
+                '1reis': 22, '2reis': 25, '1cronicas': 29, '2cronicas': 36, 'esdras': 10,
+                'neemias': 13, 'ester': 10, 'jo': 42, 'salmos': 150, 'proverbios': 31,
+                'eclesiastes': 12, 'cantares': 8, 'isaias': 66, 'jeremias': 52, 'lamentacoes': 5,
+                'ezequiel': 48, 'daniel': 12, 'oseias': 14, 'joel': 3, 'amos': 9,
+                'obadias': 1, 'jonas': 4, 'miqueias': 7, 'naum': 3, 'habacuque': 3,
+                'sofonias': 3, 'ageu': 2, 'zacarias': 14, 'malaquias': 4
+            },
+            new: {
+                'mateus': 28, 'marcos': 16, 'lucas': 24, 'joao': 21, 'atos': 28,
+                'romanos': 16, '1corintios': 16, '2corintios': 13, 'galatas': 6, 'efesios': 6,
+                'filipenses': 4, 'colossenses': 4, '1tessalonicenses': 5, '2tessalonicenses': 3,
+                '1timoteo': 6, '2timoteo': 4, 'tito': 3, 'filemom': 1, 'hebreus': 13,
+                'tiago': 5, '1pedro': 5, '2pedro': 3, '1joao': 5, '2joao': 1,
+                '3joao': 1, 'judas': 1, 'apocalipse': 22
+            }
+        };
 
         // Lista dos livros da Bíblia
         const bookNames = {
@@ -85,8 +106,11 @@
             }
         };
 
-        // Função para carregar um livro
-        async function loadBook(testament, bookKey) {
+        // Cache para capítulos carregados individualmente
+        let chapterCache = new Map();
+
+        // Função otimizada para carregar apenas o primeiro capítulo
+        async function loadBookInitial(testament, bookKey) {
             const bookId = `${testament}-${bookKey}`;
             if (loadedBooks.has(bookId)) {
                 return bibleData[testament][bookKey];
@@ -103,38 +127,37 @@
                 
                 const book = {
                     name: bookNames[testament][bookKey] || formatBookName(bookKey),
-                    chapters: []
+                    chapters: [],
+                    totalChapters: bookMetadata[testament][bookKey] || 1
                 };
                 
-                // Carregar capítulos (testando até 150 capítulos)
-                for (let chapterNum = 1; chapterNum <= 150; chapterNum++) {
-                    try {
-                        const chapterPath = `${bookPath}${chapterNum}.json`;
-                        const response = await fetch(chapterPath);
+                // Carregar apenas o primeiro capítulo inicialmente
+                try {
+                    const chapterPath = `${bookPath}1.json`;
+                    const response = await fetch(chapterPath);
+                    
+                    if (response.ok) {
+                        const chapterData = await response.json();
+                        book.chapters[0] = chapterData;
                         
-                        if (response.ok) {
-                            const chapterData = await response.json();
-                            book.chapters[chapterNum - 1] = chapterData;
-                        } else {
-                            break;
-                        }
-                    } catch (error) {
-                        break;
+                        // Cachear o primeiro capítulo
+                        const chapterKey = `${bookId}-1`;
+                        chapterCache.set(chapterKey, chapterData);
+                    } else {
+                        throw new Error('Primeiro capítulo não encontrado');
                     }
+                } catch (error) {
+                    throw new Error('Erro ao carregar primeiro capítulo');
                 }
                 
-                if (book.chapters.length > 0) {
-                    bibleData[testament][bookKey] = book;
-                    loadedBooks.add(bookId);
-                    
-                    if (bookCard) {
-                        bookCard.classList.remove('loading');
-                    }
-                    
-                    return book;
-                } else {
-                    throw new Error('Nenhum capítulo encontrado');
+                bibleData[testament][bookKey] = book;
+                loadedBooks.add(bookId);
+                
+                if (bookCard) {
+                    bookCard.classList.remove('loading');
                 }
+                
+                return book;
                 
             } catch (error) {
                 console.error(`Erro ao carregar livro ${bookKey}:`, error);
@@ -146,6 +169,68 @@
                 
                 throw error;
             }
+        }
+
+        // Função para carregar um capítulo específico sob demanda
+        async function loadChapter(testament, bookKey, chapterNumber) {
+            const bookId = `${testament}-${bookKey}`;
+            const chapterKey = `${bookId}-${chapterNumber}`;
+            
+            // Verificar cache primeiro
+            if (chapterCache.has(chapterKey)) {
+                return chapterCache.get(chapterKey);
+            }
+
+            try {
+                const testamentPath = testament === 'old' ? OLD_TESTAMENT_PATH : NEW_TESTAMENT_PATH;
+                const bookPath = `${BIBLE_PATH}${testamentPath}${bookKey}/`;
+                const chapterPath = `${bookPath}${chapterNumber}.json`;
+                
+                const response = await fetch(chapterPath);
+                
+                if (response.ok) {
+                    const chapterData = await response.json();
+                    
+                    // Cachear o capítulo
+                    chapterCache.set(chapterKey, chapterData);
+                    
+                    // Adicionar ao array de capítulos do livro
+                    if (bibleData[testament][bookKey]) {
+                        bibleData[testament][bookKey].chapters[chapterNumber - 1] = chapterData;
+                    }
+                    
+                    return chapterData;
+                } else {
+                    throw new Error(`Capítulo ${chapterNumber} não encontrado`);
+                }
+            } catch (error) {
+                console.error(`Erro ao carregar capítulo ${chapterNumber} do livro ${bookKey}:`, error);
+                throw error;
+            }
+        }
+
+        // Função para pré-carregar capítulos próximos (otimização adicional)
+        async function preloadNearbyChapters(testament, bookKey, currentChapterNumber) {
+            const book = bibleData[testament][bookKey];
+            if (!book) return;
+
+            const totalChapters = book.totalChapters;
+            const chaptersToPreload = [];
+
+            // Pré-carregar capítulo anterior e próximo
+            if (currentChapterNumber > 1) {
+                chaptersToPreload.push(currentChapterNumber - 1);
+            }
+            if (currentChapterNumber < totalChapters) {
+                chaptersToPreload.push(currentChapterNumber + 1);
+            }
+
+            // Carregar em paralelo sem aguardar
+            chaptersToPreload.forEach(chapterNum => {
+                loadChapter(testament, bookKey, chapterNum).catch(() => {
+                    // Ignorar erros no pré-carregamento
+                });
+            });
         }
 
         function formatBookName(bookName) {
@@ -218,7 +303,8 @@
             }
 
             try {
-                await loadBook(currentTestament, bookKey);
+                // Usar a função otimizada que carrega apenas o primeiro capítulo
+                await loadBookInitial(currentTestament, bookKey);
                 
                 currentBook = bookKey;
                 currentChapter = null;
@@ -226,9 +312,8 @@
                 updateChapterSelector();
                 document.getElementById('chapterSection').style.display = 'block';
                 
-                if (bibleData[currentTestament][currentBook].chapters.length > 0) {
-                    selectChapter(1);
-                }
+                // Selecionar o primeiro capítulo
+                selectChapter(1);
                 
             } catch (error) {
                 const content = document.getElementById('content');
@@ -248,26 +333,55 @@
             
             selector.innerHTML = '';
             
-            book.chapters.forEach((chapter, index) => {
-                if (chapter && chapter.length > 0) {
-                    const chapterBtn = document.createElement('button');
-                    chapterBtn.className = 'chapter-btn';
-                    chapterBtn.textContent = index + 1;
-                    chapterBtn.addEventListener('click', () => selectChapter(index + 1));
-                    selector.appendChild(chapterBtn);
-                }
-            });
+            // Usar os metadados para criar botões para todos os capítulos
+            for (let i = 1; i <= book.totalChapters; i++) {
+                const chapterBtn = document.createElement('button');
+                chapterBtn.className = 'chapter-btn';
+                chapterBtn.textContent = i;
+                chapterBtn.addEventListener('click', () => selectChapter(i));
+                selector.appendChild(chapterBtn);
+            }
         }
 
-        function selectChapter(chapterNumber) {
+        async function selectChapter(chapterNumber) {
             currentChapter = chapterNumber;
             
+            // Atualizar botões ativos
             document.querySelectorAll('.chapter-btn').forEach(btn => {
                 btn.classList.remove('active');
                 if (parseInt(btn.textContent) === chapterNumber) {
                     btn.classList.add('active');
                 }
             });
+
+            // Mostrar loading se necessário
+            const content = document.getElementById('content');
+            const book = bibleData[currentTestament][currentBook];
+            
+            if (!book.chapters[chapterNumber - 1]) {
+                content.innerHTML = `
+                    <div class="loading">
+                        <h3>Carregando capítulo ${chapterNumber}...</h3>
+                    </div>
+                `;
+                
+                try {
+                    // Carregar o capítulo sob demanda
+                    await loadChapter(currentTestament, currentBook, chapterNumber);
+                    
+                    // Pré-carregar capítulos próximos em background
+                    preloadNearbyChapters(currentTestament, currentBook, chapterNumber);
+                    
+                } catch (error) {
+                    content.innerHTML = `
+                        <div class="error">
+                            <h3>❌ Erro ao carregar capítulo</h3>
+                            <p>Não foi possível carregar o capítulo ${chapterNumber}.</p>
+                        </div>
+                    `;
+                    return;
+                }
+            }
 
             updateContent();
             updateNavigationControls();
@@ -321,7 +435,7 @@
                 controls.style.display = 'flex';
                 
                 const book = bibleData[currentTestament][currentBook];
-                const totalChapters = book.chapters.filter(chapter => chapter && chapter.length > 0).length;
+                const totalChapters = book.totalChapters;
                 
                 prevBtn.disabled = currentChapter <= 1;
                 nextBtn.disabled = currentChapter >= totalChapters;
@@ -330,17 +444,17 @@
             }
         }
 
-        function navigateToPrevChapter() {
+        async function navigateToPrevChapter() {
             if (currentChapter > 1) {
-                selectChapter(currentChapter - 1);
+                await selectChapter(currentChapter - 1);
             }
         }
 
-        function navigateToNextChapter() {
+        async function navigateToNextChapter() {
             const book = bibleData[currentTestament][currentBook];
-            const totalChapters = book.chapters.filter(chapter => chapter && chapter.length > 0).length;
+            const totalChapters = book.totalChapters;
             if (currentChapter < totalChapters) {
-                selectChapter(currentChapter + 1);
+                await selectChapter(currentChapter + 1);
             }
         }
 

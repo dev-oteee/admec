@@ -6,7 +6,7 @@
 
          body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #ffffff00 0%, #6cb809 100%);
+            background: linear-gradient(135deg, #7eb18b00 0%, #31362b 100%);
             min-height: 100vh;
             color: #22250b;
             line-height: 1.6;
@@ -37,7 +37,7 @@
         }
 
         .navigation {
-            background: linear-gradient(135deg,#ffffff 0%,#c4d8b7 100%);
+            background: linear-gradient(135deg,#ffffff 0%,#b3b3b3 100%);
             border-radius: 12px;
             box-shadow: 0 6px 25px rgba(255, 255, 255, 0.15);
             padding: 20px;
@@ -123,7 +123,7 @@
         }
 
         .book-card.selected {
-            background: linear-gradient(135deg, #3d5425 0%, #6fa611 100%);
+            background: linear-gradient(135deg, #4b854b 0% , #80a040 100%);
             color: white;
             border-color: #556b2f;
             box-shadow: 0 4px 15px rgba(107, 142, 35, 0.3);
@@ -177,7 +177,7 @@
         }
 
         .chapter-btn:hover {
-            background: #6b8e23;
+            background: #80a040;
             color: white;
             transform: scale(1.05);
         }
@@ -251,7 +251,7 @@
             padding: 14px 20px;
             border: none;
             border-radius: 25px;
-            background: #6b8e23;
+            background: #80a040;
             color: white;
             cursor: pointer;
             font-weight: bold;

@@ -6,7 +6,7 @@
 
          body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #7eb18b00 0%, #31362b 100%);
+            background: linear-gradient(135deg, #f7f7f7 0%, #000000 100%);
             min-height: 100vh;
             color: #22250b;
             line-height: 1.6;
@@ -37,7 +37,7 @@
         }
 
         .navigation {
-            background: linear-gradient(135deg,#ffffff 0%,#b3b3b3 100%);
+            background: linear-gradient(135deg,#666565 0%,#ffffff 100%);
             border-radius: 12px;
             box-shadow: 0 6px 25px rgba(255, 255, 255, 0.15);
             padding: 20px;
@@ -53,7 +53,7 @@
             font-size: 1.1em;
             font-weight: bold;
             margin-bottom: 12px;
-            color: #1a1818ab;
+            color: #ffffff;
         }
 
         .testament-selector {
@@ -65,7 +65,7 @@
         .testament-btn {
             flex: 1;
             padding: 14px 20px;
-            border: 2px solid #829b51;
+            border: 2px solid #ffffff;
             background: white;
             color:#153208;
             border-radius: 25px;
@@ -78,15 +78,15 @@
         }
 
         .testament-btn:hover {
-            background: #85e76713;
-            color: white;
+            background:6B8E23;
+            color:#2F4F4F;
             transform: translateY(-1px);
         }
 
         .testament-btn.active {
-            background: #80a040;
-            color: white;
-            box-shadow: 0 4px 12px rgba(107, 142, 35, 0.3);
+            background:rgba(48, 80, 80, 0.231);
+             color: rgb(255, 255, 255);
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
         }
 
         .books-grid {
@@ -97,15 +97,15 @@
         }
 
         .book-card {
-            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-            border: 1px solid #829b51;
+            background: linear-gradient(135deg, #ffffff);
+            border: 1px solid ;
             border-radius: 8px;
             padding: 16px 12px;
             cursor: pointer;
             transition: all 0.3s ease;
             text-align: center;
             font-weight: 600;
-            color: #3d5425;
+            color:	#2F4F4F;
             font-size: 0.9em;
             min-height: 60px;
             display: flex;
@@ -118,15 +118,15 @@
 
         .book-card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-            border-color: #6b8e23;
+            box-shadow: 0 4px 15px 	#ffffff;
+            border-color: #ffffff;
         }
 
         .book-card.selected {
-            background: linear-gradient(135deg, #4b854b 0% , #80a040 100%);
-            color: white;
-            border-color: #556b2f;
-            box-shadow: 0 4px 15px rgba(107, 142, 35, 0.3);
+            background: linear-gradient(135deg, #3050503b);
+            color: #ffffff;
+            border-color: #ffffff;
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
         }
 
         .book-card.loading {
@@ -164,9 +164,9 @@
         .chapter-btn {
             width: 44px;
             height: 44px;
-            border: 2px solid #6b8e23;
+            border: 2px solid #ffffff;
             background: white;
-            color: #6b8e23;
+            color: #2F4F4F;
             border-radius: 50%;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -177,13 +177,13 @@
         }
 
         .chapter-btn:hover {
-            background: #80a040;
+            background: #2f4f4f3b;
             color: white;
             transform: scale(1.05);
         }
 
         .chapter-btn.active {
-            background: #6b8e23;
+            background: #2f4f4f3b;
             color: white;
             box-shadow: 0 3px 10px rgba(107, 142, 35, 0.3);
         }
@@ -198,7 +198,7 @@
         }
 
         .content h2 {
-            color: #556b2f;
+            color: #2F4F4F;
             margin-bottom: 20px;
             font-size: 1.4em;
             text-align: center;
@@ -207,7 +207,7 @@
         }
 
         .content h3 {
-            color: #6b8e23;
+            color: #2F4F4F;
             margin: 20px 0 12px 0;
             font-size: 1.1em;
         }
@@ -220,7 +220,7 @@
 
         .verse-number {
             font-weight: bold;
-            color: #6b8e23;
+            color: #2F4F4F;
             margin-right: 6px;
             font-size: 0.9em;
         }
@@ -251,8 +251,8 @@
             padding: 14px 20px;
             border: none;
             border-radius: 25px;
-            background: #80a040;
-            color: white;
+            background: #f4f4ff;
+            color: rgb(0, 0, 0);
             cursor: pointer;
             font-weight: bold;
             transition: all 0.3s ease;
@@ -263,9 +263,9 @@
         }
 
         .nav-btn:hover {
-            background: #556b2f;
+            background: #2f312e;
             transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(107, 142, 35, 0.3);
+            box-shadow: 0 4px 12px rgba(185, 185, 185, 0.3);
         }
 
         .nav-btn:disabled {
@@ -461,10 +461,10 @@
         }
 
         ::-webkit-scrollbar-thumb {
-            background: rgba(107, 142, 35, 0.6);
+            background: rgba(83, 83, 83, 0.6);
             border-radius: 4px;
         }
 
         ::-webkit-scrollbar-thumb:hover {
-            background: rgba(107, 142, 35, 0.8);
+            background: #3050503b;
         }

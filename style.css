@@ -37,9 +37,9 @@
         }
 
         .navigation {
-            background: linear-gradient(135deg,#666565 0%,#ffffff 100%);
+            background: transparent;
             border-radius: 12px;
-            box-shadow: 0 6px 25px rgba(255, 255, 255, 0.15);
+            box-shadow: 0 6px 25px rgb(239 239 239 / 26%);
             padding: 20px;
             margin-bottom: 20px;
             backdrop-filter: blur(10px);
@@ -53,7 +53,7 @@
             font-size: 1.1em;
             font-weight: bold;
             margin-bottom: 12px;
-            color: #ffffff;
+            color: #2f4f4f;
         }
 
         .testament-selector {

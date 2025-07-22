@@ -1,3 +1,3 @@
   function minhaFuncao() {
-     window.location.href = "biblia.html"
+     window.location.href = "biblia.html";
   }

@@ -6,7 +6,7 @@
 
          body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f7f7f7 0%, #000000 100%);
+            background: linear-gradient(135deg, #f7f7f7 0%, #36553b 100%);
             min-height: 100vh;
             color: #22250b;
             line-height: 1.6;
@@ -282,7 +282,7 @@
         .search-input {
             width: 100%;
             padding: 14px 18px;
-            border: 2px solid #6b8e23;
+            border: 2px solid #7c8484;
             border-radius: 25px;
             font-size: 16px;
             outline: none;

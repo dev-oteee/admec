@@ -1,61 +1,46 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bíblia a Mensagem</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="shortcut icon" href="./img/favico.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="stylehome.css">
+    <title>Tela de Login</title>
 </head>
+
 <body>
     <div class="container">
-        <div class="header">
-            <img src="img/40anos.png" alt="Descrição da imagem">
+        <form>
             <h1>A mensagem na ADMEC</h1>
-            <p>Distribuição da Bíblia a Mensagem sem fins lucrativos.</p>
-            <p>A Editora Vida é responsável pela publicação da tradução da Bíblia A Mensagem em português.</p>
-        </div>
-
-        <div class="navigation">
-            <div class="nav-section">
-                <div class="nav-title">Escolha um testamento</div>
-                <div class="testament-selector">
-                    <button class="testament-btn active" data-testament="old">Antigo Testamento</button>
-                    <button class="testament-btn" data-testament="new">Novo Testamento</button>
-                </div>
+            <!---<div class="input-container">
+                <input placeholder="Email" type="email">
+                <img width="20" height="20" src="https://img.icons8.com/?size=100&id=23265&format=png&color=ffffff"
+                    alt="user" />
             </div>
+            <div class="input-container">
+                <input placeholder="Senha" type="password">
+                <img width="20" height="20"
+                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAr0lEQVR4nO2TTQrCMBCFs1d3ep/aE+hxxI32SPYe9Sj+bssntq8bQQl0UojMB4FAHjMv8xOCkxvACqiABnjqvO9HYJk6+Ra48Z0rsEmZvFWiE1AAM501UOutNTdBX/bh57sfur00F9N20Pe8+3mEdqjEwdLAWUGLCG0pbWNp4KGg8wjtQtq7pYGOVHrzgP9hAGPyNRBG4gbwFggfwuBrONnwfOBDyNg1tCI/A06YiBezS/qBMHmeLQAAAABJRU5ErkJggg=="
+                    alt="lock">
+                <a href="#">Esqueci minha senha</a>
+            </div> 
+            <button type="submit" class="enviar">Entrar</button> -->
 
-            <div class="nav-section">
-                <div class="nav-title">Escolha um livro</div>
-                <div class="search-box">
-                    <input type="text" class="search-input" id="bookSearch" placeholder="Pesquisar livro...">
-                </div>
-                <div class="books-grid" id="booksGrid">
-                    <!-- Livros serão carregados aqui -->
-                </div>
-            </div>
+            <button class="enviar" onclick="minhaFuncao()">Acessar</button>
 
-            <div class="nav-section" id="chapterSection" style="display:none;">
-                <div class="nav-title">Capítulos</div>
-                <div class="chapter-selector" id="chapterSelector">
-                    <!-- Capítulos serão carregados aqui -->
-                </div>
-            </div>
-        </div>
+            
+        </form>
 
-        <div class="content" id="content">
-            <div class="loading">
-                <h3>✨ Bem-vindo ao Leitor da Bíblia</h3>
-                <p>Selecione um testamento e depois escolha um livro para começar sua leitura.</p>
-            </div>
-        </div>
-
-        <div class="navigation-controls" id="navigationControls" style="display:none;">
-            <button class="nav-btn" id="prevChapter">← Capítulo Anterior</button>
-            <button class="nav-btn" id="nextChapter">Próximo Capítulo →</button>
-        </div>
+        <!-- <div class="cadastro">
+                <p>Não está cadastrado? <a href="#">Cadastrar</a> </p>
+            </div> -->
+        </form>
     </div>
-
-    <script src="script.js"></script>
+    <script src="script2.js"></script>
 </body>
+
 </html>

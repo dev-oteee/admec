@@ -477,3 +477,40 @@ window.addEventListener('load', function () {
     updateBooksGrid();
     updateContent();
 });
+
+let emLeitura = false;
+
+function lerBiblia() {
+  const texto = document.querySelector('.content').innerText;
+
+  const utter = new SpeechSynthesisUtterance(texto);
+  utter.lang = 'pt-BR';
+  utter.rate = 1.1;
+  utter.pitch = 1;
+
+  const selecionarVoz = () => {
+    const vozes = speechSynthesis.getVoices();
+    const voz = vozes.find(v => v.lang === 'pt-BR');
+    if (voz) utter.voice = voz;
+
+    speechSynthesis.cancel(); // limpa leitura anterior
+    speechSynthesis.speak(utter);
+    emLeitura = true;
+  };
+
+  if (speechSynthesis.getVoices().length === 0) {
+    speechSynthesis.onvoiceschanged = selecionarVoz;
+  } else {
+    selecionarVoz();
+  }
+}
+
+function pausarOuRetomar() {
+  if (!emLeitura) return;
+
+  if (speechSynthesis.paused) {
+    speechSynthesis.resume();
+  } else {
+    speechSynthesis.pause();
+  }
+}

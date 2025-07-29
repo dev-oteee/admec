@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bíblia a Mensagem</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="./img/favico.png">
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="img/40anos.png">
+            <h1>A mensagem na ADMEC</h1>
+            <p>Distribuição da Bíblia a Mensagem sem fins lucrativos.</p>
+            <p>A Editora Vida é responsável pela publicação da tradução da Bíblia A Mensagem em português.</p>
+        </div>
+
+        <div class="navigation">
+            <div class="nav-section">
+                <div class="nav-title">Escolha um testamento</div>
+                <div class="testament-selector">
+                    <button class="testament-btn active" data-testament="old">Antigo Testamento</button>
+                    <button class="testament-btn" data-testament="new">Novo Testamento</button>
+                </div>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-title">Escolha um livro</div>
+                <div class="search-box">
+                    <input type="text" class="search-input" id="bookSearch" placeholder="Pesquisar livro...">
+                </div>
+                <div class="books-grid" id="booksGrid">
+                    <!-- Livros serão carregados aqui -->
+                </div>
+            </div>
+
+            <div class="nav-section" id="chapterSection" style="display:none;">
+                <div class="nav-title">Capítulos</div>
+                <div class="chapter-selector" id="chapterSelector">
+                    <!-- Capítulos serão carregados aqui -->
+
+                </div>
+                <div class="player"><button class=book-card onclick="lerBiblia()"><i class="fas fa-play"></i></button>
+                    <button class=book-card onclick="pausarOuRetomar()"><i class="fas fa-pause"></i></button>
+                    <button class=book-card onclick="speechSynthesis.cancel()"><i class="fas fa-stop"></i></button>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="content" id="content">
+            <div class="loading">
+                <h3>✨ Bem-vindo ao Leitor da Bíblia</h3>
+                <p>Selecione um testamento e depois escolha um livro para começar sua leitura.</p>
+            </div>
+        </div>
+        <div class="navigation-controls" id="navigationControls" style="display:none;">
+            <button class="nav-btn" id="prevChapter">← Capítulo Anterior</button>
+            <button class="nav-btn" id="nextChapter">Próximo Capítulo →</button>
+        </div>
+    </div>
+
+
+    <script src="script.js"></script>
+</body>
+
+</html>

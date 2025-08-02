@@ -477,3 +477,31 @@
             justify-content: center;
             
         }
+
+.min-h-screen {
+    min-height: 100vh;
+}
+
+.conteudo {
+    font-family: "Noto Sans", sans-serif;
+    font-size: 110%;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #2F4F4F;
+    color: #ffffff;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 2em;
+    box-sizing: border-box;
+    z-index: 1000;
+
+       .paginas {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+

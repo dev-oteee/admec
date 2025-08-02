@@ -6,7 +6,7 @@
 
          body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f7f7f7 0%, #36553b 100%);
+            background: linear-gradient(135deg, #ffffff 0%, #fffafa 100%);
             min-height: 100vh;
             color: #22250b;
             line-height: 1.6;
@@ -37,9 +37,9 @@
         }
 
         .navigation {
-            background: transparent;
+            background: linear-gradient(135deg,#0f302250 0%,#ffffff 100%);
             border-radius: 12px;
-            box-shadow: 0 6px 25px rgb(239 239 239 / 26%);
+            box-shadow: 0 6px 25px rgba(255, 255, 255, 0.15);
             padding: 20px;
             margin-bottom: 20px;
             backdrop-filter: blur(10px);
@@ -53,7 +53,7 @@
             font-size: 1.1em;
             font-weight: bold;
             margin-bottom: 12px;
-            color: #2f4f4f;
+            color: #ffffff;
         }
 
         .testament-selector {
@@ -282,7 +282,7 @@
         .search-input {
             width: 100%;
             padding: 14px 18px;
-            border: 2px solid #7c8484;
+            border: 2px solid #6b8e23;
             border-radius: 25px;
             font-size: 16px;
             outline: none;
@@ -469,13 +469,23 @@
             background: #3050503b;
         }
 
-    .player {
-            margin-bottom: 25px;
-            color: #3e3f3d;
-            padding: 20px 10px;
-            display: flex;
-            justify-content: center;
-            
-        }
 
+        .min-h-screen {
+    min-height: 100vh;
+}
 
+.conteudo {
+    font-family: "Noto Sans", sans-serif;
+    font-size: 110%;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #2F4F4F;
+    color: #ffffff;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 2em;
+    box-sizing: border-box;
+    z-index: 1000;}

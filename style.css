@@ -4,9 +4,9 @@
             box-sizing: border-box;
         }
 
-         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #ffffff 0%, #fffafa 100%);
+        body {
+            font-family: "Noto Sans", sans-serif;
+            background: #fffafa;
             min-height: 100vh;
             color: #22250b;
             line-height: 1.6;
@@ -21,25 +21,24 @@
         .header {
             text-align: center;
             margin-bottom: 25px;
-            color: #3e3f3d;
+            color: #2F4F4F;
             padding: 20px 10px;
         }
 
         .header h1 {
-            font-size: 2.2em;
+            font-size: 2.0em;
             margin-bottom: 8px;
-            text-shadow: 2px 2px 4px #686868c9;
         }
 
         .header p {
-            font-size: 1.1em;
+            font-size: 1.0em;
             opacity: 0.9;
         }
 
         .navigation {
-            background: linear-gradient(135deg,#0f302250 0%,#ffffff 100%);
+            background: transparent;
             border-radius: 12px;
-            box-shadow: 0 6px 25px rgba(255, 255, 255, 0.15);
+            box-shadow: 0 1px 5px #2f4f4f80;
             padding: 20px;
             margin-bottom: 20px;
             backdrop-filter: blur(10px);
@@ -50,10 +49,10 @@
         }
 
         .nav-title {
-            font-size: 1.1em;
+            font-size: 1em;
             font-weight: bold;
             margin-bottom: 12px;
-            color: #ffffff;
+            color: #2F4F4F;
         }
 
         .testament-selector {
@@ -65,10 +64,11 @@
         .testament-btn {
             flex: 1;
             padding: 14px 20px;
-            border: 2px solid #ffffff;
-            background: white;
-            color:#153208;
-            border-radius: 25px;
+            border: 0.5px solid #2f4f4f29;
+            color: #2F4F4F;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 1px 5px #2f4f4f80;
             cursor: pointer;
             transition: all 0.3s ease;
             font-weight: bold;
@@ -78,14 +78,14 @@
         }
 
         .testament-btn:hover {
-            background:6B8E23;
-            color:#2F4F4F;
-            transform: translateY(-1px);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px #ffffff;
+            border-color: #2f4f4f80;
         }
 
         .testament-btn.active {
-            background:rgba(48, 80, 80, 0.231);
-             color: rgb(255, 255, 255);
+            background: #2F4F4F;
+            color: rgb(255, 255, 255);
             box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
         }
 
@@ -97,15 +97,16 @@
         }
 
         .book-card {
-            background: linear-gradient(135deg, #ffffff);
-            border: 1px solid ;
-            border-radius: 8px;
+            background: #ffffff;
+            border-radius: 12px;
+            border: 0.5px solid #2f4f4f29;
+            box-shadow: 0 1px 5px #2f4f4f80;
             padding: 16px 12px;
             cursor: pointer;
             transition: all 0.3s ease;
             text-align: center;
             font-weight: 600;
-            color:	#2F4F4F;
+            color: #2F4F4F;
             font-size: 0.9em;
             min-height: 60px;
             display: flex;
@@ -118,14 +119,14 @@
 
         .book-card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 15px 	#ffffff;
-            border-color: #ffffff;
+            box-shadow: 0 4px 15px #ffffff;
+            border-color: #2f4f4f80;
         }
 
         .book-card.selected {
-            background: linear-gradient(135deg, #3050503b);
+            background: #2F4F4F;
             color: #ffffff;
-            border-color: #ffffff;
+            border-color: #2F4F4F;
             box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
         }
 
@@ -150,8 +151,13 @@
         }
 
         @keyframes spin {
-            0% { transform: translateY(-50%) rotate(0deg); }
-            100% { transform: translateY(-50%) rotate(360deg); }
+            0% {
+                transform: translateY(-50%) rotate(0deg);
+            }
+
+            100% {
+                transform: translateY(-50%) rotate(360deg);
+            }
         }
 
         .chapter-selector {
@@ -164,7 +170,8 @@
         .chapter-btn {
             width: 44px;
             height: 44px;
-            border: 2px solid #ffffff;
+            border: 0.5px solid #2f4f4f29;
+            box-shadow: 0 1px 5px #2f4f4f80;
             background: white;
             color: #2F4F4F;
             border-radius: 50%;
@@ -177,13 +184,13 @@
         }
 
         .chapter-btn:hover {
-            background: #2f4f4f3b;
-            color: white;
-            transform: scale(1.05);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px #ffffff;
+            border-color: #2f4f4f80;
         }
 
         .chapter-btn.active {
-            background: #2f4f4f3b;
+            background: #2F4F4F;
             color: white;
             box-shadow: 0 3px 10px rgba(107, 142, 35, 0.3);
         }
@@ -191,7 +198,7 @@
         .content {
             background: rgba(255, 255, 255, 0.95);
             border-radius: 12px;
-            box-shadow: 0 6px 25px rgba(0,0,0,0.15);
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
             padding: 25px;
             margin-bottom: 20px;
             backdrop-filter: blur(10px);
@@ -282,8 +289,8 @@
         .search-input {
             width: 100%;
             padding: 14px 18px;
-            border: 2px solid #6b8e23;
-            border-radius: 25px;
+            border: 2px solid #2f4f4f2e;
+            border-radius: 10px;
             font-size: 16px;
             outline: none;
             transition: all 0.3s ease;
@@ -291,8 +298,10 @@
         }
 
         .search-input:focus {
-            border-color: #556b2f;
-            box-shadow: 0 0 12px rgba(107, 142, 35, 0.3);
+             background: #ffffff;
+            transform: translateY(-5px);
+            border: 1px solid #2f4f4f36;
+            box-shadow: 0 0px 20px #2f4f4f7f;;
         }
 
         .status {
@@ -429,6 +438,7 @@
 
         /* Melhorias para toque */
         @media (hover: none) {
+
             .book-card:hover,
             .chapter-btn:hover,
             .testament-btn:hover,
@@ -471,21 +481,5 @@
 
 
         .min-h-screen {
-    min-height: 100vh;
-}
-
-.conteudo {
-    font-family: "Noto Sans", sans-serif;
-    font-size: 110%;
-    width: 100vw;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background: #2F4F4F;
-    color: #ffffff;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    gap: 2em;
-    box-sizing: border-box;
-    z-index: 1000;}
+            min-height: 100vh;
+        }

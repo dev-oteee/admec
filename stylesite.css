@@ -1,5 +1,8 @@
 body {
+   body {
     display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     font-family: "Noto Sans", sans-serif;
     min-height: 100vh;
     color: #FFFAFA;
@@ -7,6 +10,7 @@ body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
 }
 
 .min-h-screen {
@@ -201,4 +205,14 @@ body {
         background: rgba(59, 167, 9, 0.2);
         color: #3ba709;
     }
+}
+
+
+.footer {
+    width: 100%;
+    color: #2F4F4F;
+    text-align: center;
+    padding: 15px 15px;
+    font-size: 1.4em;
+    margin-top: auto;
 }

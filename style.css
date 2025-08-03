@@ -1,485 +1,434 @@
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: "Noto Sans", sans-serif;
-            background: #fffafa;
-            min-height: 100vh;
-            color: #22250b;
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 15px;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 25px;
-            color: #2F4F4F;
-            padding: 20px 10px;
-        }
-
-        .header h1 {
-            font-size: 2.0em;
-            margin-bottom: 8px;
-        }
-
-        .header p {
-            font-size: 1.0em;
-            opacity: 0.9;
-        }
-
-        .navigation {
-            background: transparent;
-            border-radius: 12px;
-            box-shadow: 0 1px 5px #2f4f4f80;
-            padding: 20px;
-            margin-bottom: 20px;
-            backdrop-filter: blur(10px);
-        }
-
-        .nav-section {
-            margin-bottom: 18px;
-        }
-
-        .nav-title {
-            font-size: 1em;
-            font-weight: bold;
-            margin-bottom: 12px;
-            color: #2F4F4F;
-        }
-
-        .testament-selector {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 18px;
-        }
-
-        .testament-btn {
-            flex: 1;
-            padding: 14px 20px;
-            border: 0.5px solid #2f4f4f29;
-            color: #2F4F4F;
-            background: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 1px 5px #2f4f4f80;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: bold;
-            font-size: 0.95em;
-            touch-action: manipulation;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        .testament-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px #ffffff;
-            border-color: #2f4f4f80;
-        }
-
-        .testament-btn.active {
-            background: #2F4F4F;
-            color: rgb(255, 255, 255);
-            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
-        }
-
-        .books-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-            gap: 12px;
-            margin-bottom: 18px;
-        }
-
-        .book-card {
-            background: #ffffff;
-            border-radius: 12px;
-            border: 0.5px solid #2f4f4f29;
-            box-shadow: 0 1px 5px #2f4f4f80;
-            padding: 16px 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center;
-            font-weight: 600;
-            color: #2F4F4F;
-            font-size: 0.9em;
-            min-height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            touch-action: manipulation;
-            -webkit-tap-highlight-color: transparent;
-            position: relative;
-        }
-
-        .book-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px #ffffff;
-            border-color: #2f4f4f80;
-        }
-
-        .book-card.selected {
-            background: #2F4F4F;
-            color: #ffffff;
-            border-color: #2F4F4F;
-            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
-        }
-
-        .book-card.loading {
-            background: linear-gradient(135deg, #ffc107 0%, #ffb300 100%);
-            color: rgb(255, 255, 255);
-            border-color: #ff8f00;
-        }
-
-        .book-card.loading::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            right: 8px;
-            width: 12px;
-            height: 12px;
-            border: 2px solid transparent;
-            border-top: 2px solid white;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            transform: translateY(-50%);
-        }
-
-        @keyframes spin {
-            0% {
-                transform: translateY(-50%) rotate(0deg);
-            }
-
-            100% {
-                transform: translateY(-50%) rotate(360deg);
-            }
-        }
-
-        .chapter-selector {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 18px;
-        }
-
-        .chapter-btn {
-            width: 44px;
-            height: 44px;
-            border: 0.5px solid #2f4f4f29;
-            box-shadow: 0 1px 5px #2f4f4f80;
-            background: white;
-            color: #2F4F4F;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: bold;
-            font-size: 0.9em;
-            touch-action: manipulation;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        .chapter-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px #ffffff;
-            border-color: #2f4f4f80;
-        }
-
-        .chapter-btn.active {
-            background: #2F4F4F;
-            color: white;
-            box-shadow: 0 3px 10px rgba(107, 142, 35, 0.3);
-        }
-
-        .content {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 12px;
-            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
-            padding: 25px;
-            margin-bottom: 20px;
-            backdrop-filter: blur(10px);
-        }
-
-        .content h2 {
-            color: #2F4F4F;
-            margin-bottom: 20px;
-            font-size: 1.4em;
-            text-align: center;
-            border-bottom: 2px solid #6b8e23;
-            padding-bottom: 10px;
-        }
-
-        .content h3 {
-            color: #2F4F4F;
-            margin: 20px 0 12px 0;
-            font-size: 1.1em;
-        }
-
-        .verse {
-            margin-bottom: 12px;
-            line-height: 1.7;
-            font-size: 1.05em;
-        }
-
-        .verse-number {
-            font-weight: bold;
-            color: #2F4F4F;
-            margin-right: 6px;
-            font-size: 0.9em;
-        }
-
-        .loading {
-            text-align: center;
-            padding: 40px 20px;
-            color: #666;
-        }
-
-        .error {
-            text-align: center;
-            padding: 40px 20px;
-            color: #721c24;
-            background: #f8d7da;
-            border-radius: 8px;
-            border: 1px solid #f5c6cb;
-        }
-
-        .navigation-controls {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-            gap: 10px;
-        }
-
-        .nav-btn {
-            padding: 14px 20px;
-            border: none;
-            border-radius: 25px;
-            background: #f4f4ff;
-            color: rgb(0, 0, 0);
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            flex: 1;
-            max-width: 200px;
-            touch-action: manipulation;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        .nav-btn:hover {
-            background: #2f312e;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(185, 185, 185, 0.3);
-        }
-
-        .nav-btn:disabled {
-            background: #adb5bd;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-
-        .search-box {
-            margin-bottom: 18px;
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 14px 18px;
-            border: 2px solid #2f4f4f2e;
-            border-radius: 10px;
-            font-size: 16px;
-            outline: none;
-            transition: all 0.3s ease;
-            background: white;
-        }
-
-        .search-input:focus {
-             background: #ffffff;
-            transform: translateY(-5px);
-            border: 1px solid #2f4f4f36;
-            box-shadow: 0 0px 20px #2f4f4f7f;;
-        }
-
-        .status {
-            text-align: center;
-            padding: 16px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            font-weight: bold;
-        }
-
-        .status.success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-
-        .status.error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-
-        .status.info {
-            background: #e8f5e8;
-            color: #2d5a2d;
-            border: 1px solid #c3e6cb;
-        }
-
-
-        /* Melhorias para dispositivos móveis */
-        @media (max-width: 768px) {
-            .container {
-                padding: 10px;
-            }
-
-            .header h1 {
-                font-size: 1.8em;
-            }
-
-            .header p {
-                font-size: 1em;
-            }
-
-            .navigation {
-                padding: 15px;
-            }
-
-            .books-grid {
-                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-                gap: 10px;
-            }
-
-            .book-card {
-                padding: 12px 8px;
-                font-size: 0.85em;
-                min-height: 50px;
-            }
-
-            .testament-btn {
-                padding: 12px 16px;
-                font-size: 0.9em;
-            }
-
-            .chapter-btn {
-                width: 40px;
-                height: 40px;
-                font-size: 0.85em;
-            }
-
-            .content {
-                padding: 20px 15px;
-            }
-
-            .content h2 {
-                font-size: 1.2em;
-            }
-
-            .verse {
-                font-size: 1rem;
-                line-height: 1.6;
-            }
-
-            .navigation-controls {
-                flex-direction: column;
-                gap: 8px;
-            }
-
-            .nav-btn {
-                max-width: none;
-                padding: 12px 16px;
-            }
-
-            .search-input {
-                padding: 12px 16px;
-                font-size: 16px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .header h1 {
-                font-size: 1.6em;
-            }
-
-            .books-grid {
-                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-                gap: 8px;
-            }
-
-            .book-card {
-                padding: 10px 6px;
-                font-size: 0.8em;
-                min-height: 45px;
-            }
-
-            .chapter-btn {
-                width: 36px;
-                height: 36px;
-                font-size: 0.8em;
-            }
-
-            .content {
-                padding: 15px 12px;
-            }
-
-            .verse {
-                font-size: 0.95em;
-            }
-
-            .testament-selector {
-                flex-direction: column;
-                gap: 6px;
-            }
-        }
-
-        /* Melhorias para toque */
-        @media (hover: none) {
-
-            .book-card:hover,
-            .chapter-btn:hover,
-            .testament-btn:hover,
-            .nav-btn:hover {
-                transform: none;
-            }
-
-            .book-card:active {
-                transform: scale(0.98);
-            }
-
-            .chapter-btn:active {
-                transform: scale(0.95);
-            }
-
-            .testament-btn:active,
-            .nav-btn:active {
-                transform: scale(0.98);
-            }
-        }
-
-        /* Scrollbar personalizada */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: rgba(83, 83, 83, 0.6);
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: #3050503b;
-        }
-
-
-        .min-h-screen {
-            min-height: 100vh;
-        }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Noto Sans", sans-serif;
+    background: #fffafa;
+    min-height: 100vh;
+    color: #22250b;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 15px;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #2b4b3a;
+    padding: 20px 10px;
+}
+
+.header h1 {
+    font-size: 2.0em;
+    margin-bottom: 8px;
+}
+
+.header p {
+    font-size: 1.0em;
+    opacity: 0.9;
+}
+
+.navigation {
+    background: transparent;
+    border-radius: 12px;
+    box-shadow: 0 1px 5px #2b4b3a80;
+    padding: 20px;
+    margin-bottom: 20px;
+    backdrop-filter: blur(10px);
+}
+
+.nav-section {
+    margin-bottom: 18px;
+}
+
+.nav-title {
+    font-size: 1em;
+    font-weight: bold;
+    margin-bottom: 12px;
+    color: #2b4b3a;
+}
+
+.testament-selector {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 18px;
+}
+
+.testament-btn {
+    flex: 1;
+    padding: 14px 20px;
+    border: 0.5px solid #2b4b3a29;
+    color: #2b4b3a;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 1px 5px #2b4b3a80;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    font-size: 0.95em;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.testament-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px #ffffff;
+    border-color: #2b4b3a80;
+}
+
+.testament-btn.active {
+    background: #2b4b3a;
+    color: rgb(255, 255, 255);
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+}
+
+.books-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.book-card {
+    background: #ffffff;
+    border-radius: 12px;
+    border: 0.5px solid #2b4b3a29;
+    box-shadow: 0 1px 5px #2b4b3a80;
+    padding: 16px 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    font-weight: 600;
+    color: #2b4b3a;
+    font-size: 0.9em;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    position: relative;
+}
+
+.book-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px #ffffff;
+    border-color: #2b4b3a80;
+}
+
+.book-card.selected {
+    background: #2b4b3a;
+    color: #ffffff;
+    border-color: #2b4b3a;
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
+}
+
+.book-card.loading {
+    background: linear-gradient(135deg, #ffc107 0%, #ffb300 100%);
+    color: rgb(255, 255, 255);
+    border-color: #ff8f00;
+}
+
+.book-card.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    width: 12px;
+    height: 12px;
+    border: 2px solid transparent;
+    border-top: 2px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    transform: translateY(-50%);
+}
+
+@keyframes spin {
+    0% {
+        transform: translateY(-50%) rotate(0deg);
+    }
+
+    100% {
+        transform: translateY(-50%) rotate(360deg);
+    }
+}
+
+.chapter-selector {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 18px;
+}
+
+.chapter-btn {
+    width: 44px;
+    height: 44px;
+    border: 0.5px solid #2b4b3a29;
+    box-shadow: 0 1px 5px #2b4b3a80;
+    background: white;
+    color: #2b4b3a;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    font-size: 0.9em;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.chapter-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px #ffffff;
+    border-color: #2b4b3a80;
+}
+
+.chapter-btn.active {
+    background: #2b4b3a;
+    color: white;
+    box-shadow: 0 3px 10px rgba(107, 142, 35, 0.3);
+}
+
+.content {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 12px;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+    padding: 25px;
+    margin-bottom: 20px;
+    backdrop-filter: blur(10px);
+}
+
+.content h2 {
+    color: #2b4b3a;
+    margin-bottom: 20px;
+    font-size: 1.4em;
+    text-align: center;
+    border-bottom: 2px solid #6b8e23;
+    padding-bottom: 10px;
+}
+
+.content h3 {
+    color: #2b4b3a;
+    margin: 20px 0 12px 0;
+    font-size: 1.1em;
+}
+
+.verse {
+    margin-bottom: 12px;
+    line-height: 1.7;
+    font-size: 1.05em;
+}
+
+.verse-number {
+    font-weight: bold;
+    color: #2b4b3a;
+    margin-right: 6px;
+    font-size: 0.9em;
+}
+
+.loading {
+    text-align: center;
+    padding: 40px 20px;
+    color: #666;
+}
+
+.error {
+    text-align: center;
+    padding: 40px 20px;
+    color: #721c24;
+    background: #f8d7da;
+    border-radius: 8px;
+    border: 1px solid #f5c6cb;
+}
+
+.navigation-controls {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    gap: 10px;
+}
+
+.nav-btn {
+    padding: 14px 20px;
+    border: none;
+    border-radius: 25px;
+    background: #f4f4ff;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    flex: 1;
+    max-width: 200px;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.nav-btn:hover {
+    background: #2f312e;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(185, 185, 185, 0.3);
+}
+
+.nav-btn:disabled {
+    background: #adb5bd;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.search-box {
+    margin-bottom: 18px;
+}
+
+.search-input {
+    width: 100%;
+    padding: 14px 18px;
+    border: 2px solid #2b4b3a2e;
+    border-radius: 10px;
+    font-size: 16px;
+    outline: none;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.search-input:focus {
+    background: #ffffff;
+    transform: translateY(-5px);
+    border: 1px solid #2b4b3a36;
+    box-shadow: 0 0px 20px #2b4b3a7f;
+}
+
+.status {
+    text-align: center;
+    padding: 16px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.status.success {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.status.error {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.status.info {
+    background: #e8f5e8;
+    color: #2d5a2d;
+    border: 1px solid #c3e6cb;
+}
+
+/* Melhorias para dispositivos móveis */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+
+    .header h1 {
+        font-size: 1.8em;
+    }
+
+    .header p {
+        font-size: 1em;
+    }
+
+    .navigation {
+        padding: 15px;
+    }
+
+    .books-grid {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 10px;
+    }
+
+    .book-card {
+        padding: 12px 8px;
+        font-size: 0.85em;
+        min-height: 50px;
+    }
+
+    .testament-btn {
+        padding: 12px 16px;
+        font-size: 0.9em;
+    }
+
+    .chapter-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 0.85em;
+    }
+
+    .content {
+        padding: 20px 15px;
+    }
+
+    .content h2 {
+        font-size: 1.2em;
+    }
+
+    .verse {
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+
+    .navigation-controls {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .nav-btn {
+        max-width: none;
+        padding: 12px 16px;
+    }
+
+    .search-input {
+        padding: 12px 16px;
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .header h1 {
+        font-size: 1.6em;
+    }
+
+    .books-grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 8px;
+    }
+
+    .book-card {
+        padding: 10px 6px;
+        font-size: 0.8em;
+        min-height: 45px;
+    }
+
+    .chapter-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 0.8em;
+    }
+
+    .content {
+        padding: 15px 12px;
+    }
+
+    .verse {
+        font-size: 0.95em;
+    }
+
+    .testament-selector {
+        flex-direction: column;
+        gap

@@ -17,21 +17,25 @@ body {
 
 /* NAVBAR */
 .conteudo {
-  font-size: 110%;
+  font-size: 100%;
+  background-color: transparent;
+  border-radius: 0 0 35px 35px;
   width: 100%;
-  background: #2F4F4F;
-  color: #ffffff;
+  color: #2b4b3a;
   padding: 20px;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   gap: 1em;
-  position: sticky;
+  position: sitcky;
   top: 0;
   z-index: 1000;
 }
 
 .paginas {
+  backgroud-color: #2b4b3a;
+  padding: 1px 1px;
+  marging: 1px 1px;
   text-decoration: none;
   color: inherit;
   cursor: pointer;
@@ -39,9 +43,10 @@ body {
 }
 
 .paginas:hover {
-  color: #3ba709;
-  border-radius: 16px;
-  background: transparent;
+  color: #ffffff;
+  border-radius: 10px;
+  padding: 4px;
+  background: #2b4b3a;
   -webkit-tap-highlight-color: transparent;
 }
 

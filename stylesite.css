@@ -43,12 +43,13 @@ body {
 }
 
 .paginas:hover {
-color: #56684a;
-  background-color: #a6a6a60d;
-  padding: 8px 10px;   
-   border-radius: 8px;  
+color: #ffffff;
+  filter: blur(0,8px);
+  background-color: #578b6f;
+  padding: 8px 15px;
+   border-radius: 10px;  
    transform: translateY(-2px);
-   box-shadow: 0 1px 5px #2b4b3a61;
+   box-shadow: 0 1px 5px #0f0f0f6e;
 }
 
 /* APRESENTAÇÃO */

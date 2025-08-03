@@ -45,7 +45,7 @@ body {
 .paginas:hover {
 color: #ffffff;
   filter: blur(0,8px);
-  background-color: #578b6f;
+  background-color: #2F4F4F;
   padding: 8px 15px;
    border-radius: 10px;  
    transform: translateY(-2px);

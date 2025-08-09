@@ -514,3 +514,22 @@ function pausarOuRetomar() {
     speechSynthesis.pause();
   }
 }
+
+
+ let ultimaPosicaoScroll = 0;
+
+  window.addEventListener('scroll', function () {
+    let posicaoAtual = window.scrollY;
+    const menu = document.querySelector('.conteudo');
+
+    if (posicaoAtual > ultimaPosicaoScroll) {
+      // Rolando pra baixo → esconde o menu
+      menu.classList.add('oculto');
+    } else {
+      // Rolando pra cima → mostra o menu
+      menu.classList.remove('oculto');
+    }
+
+    ultimaPosicaoScroll = posicaoAtual;
+  });
+  

@@ -5,22 +5,28 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ADMEC</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="stylesite.css" />
-     <link rel="shortcut icon" href="./img/favico.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="./img/favico.png">
 </head>
 
 <body>
-
+    <a href="#sobre" class="botao-flutuante">⬆</a>
     <div class="conteudo">
-        <a class="paginas" href="./index.html">SOBRE A ADMEC</a>
-        <a class="paginas">DEPARTAMENTOS</a>
-        <a class="paginas" href="https://www.instagram.com/admec.oficial/">NOSSAS REDES</a>
-        <a class="paginas">AGENDA E CULTOS</a>
-        <a class="paginas" href="./biblia.html">A MENSAGEM NA ADMEC</a>
+       <a class="paginas" href="#sobre">SOBRE A ADMEC</a>
+        <!--<a class="paginas" href="#departamentos">DEPARTAMENTOS</a>-->
+        <a class="paginas" href="https://www.instagram.com/admec.oficial/" target="_blank"
+            rel="noopener noreferrer">NOSSAS REDES</a>
+       <!-- <a class="paginas" href="#agenda">AGENDA E CULTOS</a>-->
+        <a class="paginas" href="#biblia">A MENSAGEM NA ADMEC</a>
     </div>
 
-    <main class="apresentacao">
+    <main id="sobre" class="apresentacao">
         <img src="./img/40anos.png" alt="40 anos" />
         <div class="boasvindas">
             <h2>Quem somos nós?</h2>
@@ -35,10 +41,63 @@
         </div>
     </main>
 
-    <footer class="footer">
-        © Desenvolvido pela secretaria de comunicação da ADMEC. Todos os direitos reservados.
-    </footer>
+    </section>
+    <section id="biblia">
+        <div class="container">
+            <div class="header">
+                <a href="./index.html"><img src="img/40anos.png" class="media-object  img-responsive img-thumbnail"></a>
+                <h1>A mensagem na ADMEC</h1>
+                <p>Distribuição da Bíblia a Mensagem sem fins lucrativos.</p>
+                <p>A Editora Vida é responsável pela publicação da tradução da Bíblia A Mensagem em português.</p>
+            </div>
 
+            <div class="navigation">
+                <div class="nav-section">
+                    <div class="nav-title">Escolha um testamento</div>
+                    <div class="testament-selector">
+                        <button class="testament-btn active" data-testament="old">Antigo Testamento</button>
+                        <button class="testament-btn" data-testament="new">Novo Testamento</button>
+                    </div>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-title">Escolha um livro</div>
+                    <div class="search-box">
+                        <input type="text" class="search-input" id="bookSearch" placeholder="Pesquisar livro...">
+                    </div>
+                    <div class="books-grid" id="booksGrid">
+                        <!-- Livros serão carregados aqui -->
+                    </div>
+                </div>
+
+                <div class="nav-section" id="chapterSection" style="display:none;">
+                    <div class="nav-title">Capítulos</div>
+                    <div class="chapter-selector" id="chapterSelector">
+                        <!-- Capítulos serão carregados aqui -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="content" id="content">
+                <div class="loading">
+                    <h3>✨ Bem-vindo ao Leitor da Bíblia</h3>
+                    <p>Selecione um testamento e depois escolha um livro para começar sua leitura.</p>
+                </div>
+            </div>
+
+            <div class="navigation-controls" id="navigationControls" style="display:none;">
+                <button class="nav-btn" id="prevChapter">← Capítulo Anterior</button>
+                <button class="nav-btn" id="nextChapter">Próximo Capítulo →</button>
+            </div>
+        </div>
+
+        <script src="script.js"></script>
+    </section>
+
+    <footer class="rodape">
+  © 2025 — Desenvolvido por 
+  <a class="criative" href="https://www.instagram.com/criativedigital_pe"> CRIATIVE DIGITAL<a>.
+</footer>
 </body>
 
 </html>

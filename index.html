@@ -7,22 +7,38 @@
     <title>ADMEC</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600&family=Noto+Sans&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="shortcut icon" href="./img/favico.png">
 </head>
 
 <body>
     <a href="#sobre" class="botao-flutuante">⬆</a>
+
+    <!-- Navbar Desktop -->
     <div class="conteudo nav-principal">
-       <a class="paginas" href="#sobre">SOBRE A ADMEC</a>
-       <a class="paginas" href="https://www.instagram.com/admec.oficial/" target="_blank"
+        <a class="paginas" href="#sobre">SOBRE A ADMEC</a>
+        <a class="paginas" href="https://www.instagram.com/admec.oficial/" target="_blank"
             rel="noopener noreferrer">NOSSAS REDES</a>
-       <a class="paginas" href="#biblia">A MENSAGEM NA ADMEC</a>
+        <a class="paginas" href="#biblia">A MENSAGEM NA ADMEC</a>
     </div>
+
+    <!-- Navbar Mobile estilo APP -->
+    <nav class="mobile-nav">
+        <a href="#sobre" class="nav-link active">
+            <span class="material-icons">home</span>
+            <span class="nav-text">Início</span>
+        </a>
+        <a href="https://www.instagram.com/admec.oficial/" target="_blank" class="nav-link">
+            <span class="material-icons">share</span>
+            <span class="nav-text">Redes</span>
+        </a>
+        <a href="#biblia" class="nav-link">
+            <span class="material-icons">menu_book</span>
+            <span class="nav-text">Bíblia</span>
+        </a>
+    </nav>
 
     <main id="sobre" class="apresentacao">
         <img src="./img/40anos.png" alt="40 anos" />
@@ -86,12 +102,13 @@
 
         <script src="script.js"></script>
     </section>
-      <footer class="rodape">
-  © 2025 — Desenvolvido por 
-  <a class="criative" href="https://www.instagram.com/criativedigital_pe"> CRIATIVE DIGITAL<a>.
-</footer>
 
+    <footer class="rodape">
+        © 2025 — Desenvolvido por 
+        <a class="criative" href="https://www.instagram.com/criativedigital_pe"> CRIATIVE DIGITAL</a>.
+    </footer>
+
+    <script src="mobile-nav.js"></script>
 </body>
-
 
 </html>

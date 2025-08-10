@@ -110,13 +110,21 @@ const bookNames = {
 let chapterCache = new Map();
 
 // --- Helper: rolagem suave considerando header fixo ---
-function smoothScrollToElement(el, extraOffset = 8) {
+function smoothScrollToElement(el, extraOffset = 80) {
     if (!el) return;
     const header = document.querySelector('.conteudo');
     const headerHeight = header ? header.offsetHeight : 0;
     const rect = el.getBoundingClientRect();
     const absoluteY = window.scrollY + rect.top - headerHeight - extraOffset;
     window.scrollTo({ top: absoluteY, behavior: 'smooth' });
+}
+
+// Função para fazer scroll para o topo da área de conteúdo
+function scrollToContentTop() {
+    const contentEl = document.getElementById('content');
+    if (contentEl) {
+        smoothScrollToElement(contentEl, 20);
+    }
 }
 
 // Função otimizada para carregar apenas o primeiro capítulo
@@ -260,7 +268,7 @@ document.getElementById('bookSearch').addEventListener('input', function (event)
     });
 });
 
-// Testamento buttons (listeners permanecem os mesmos que você tinha)
+// Testamento buttons
 document.querySelectorAll('.testament-btn').forEach(btn => {
     btn.addEventListener('click', function () {
         selectTestament(this.dataset.testament);
@@ -290,7 +298,7 @@ function selectTestament(testament) {
     const booksGridEl = document.getElementById('booksGrid');
     if (booksGridEl) {
         // pequeno delay para garantir que a grade foi renderizada
-        setTimeout(() => smoothScrollToElement(booksGridEl), 80);
+        setTimeout(() => smoothScrollToElement(booksGridEl), 100);
     }
 }
 
@@ -331,11 +339,8 @@ async function selectBook(bookKey) {
         const chapterSectionEl = document.getElementById('chapterSection');
         chapterSectionEl.style.display = 'block';
 
-        // Rolagem suave até a seção de capítulos (ajustada para header fixo)
-        setTimeout(() => smoothScrollToElement(chapterSectionEl), 80);
-
-        // Selecionar o primeiro capítulo
-        selectChapter(1);
+        // CORREÇÃO: Rolagem suave até a seção de capítulos
+        setTimeout(() => smoothScrollToElement(chapterSectionEl), 0);
 
     } catch (error) {
         const content = document.getElementById('content');
@@ -407,6 +412,9 @@ async function selectChapter(chapterNumber) {
 
     updateContent();
     updateNavigationControls();
+
+    // ADICIONADO: Scroll para o topo do conteúdo após carregar o capítulo
+    setTimeout(() => scrollToContentTop(), 150);
 }
 
 function updateContent() {
@@ -469,6 +477,7 @@ function updateNavigationControls() {
 async function navigateToPrevChapter() {
     if (currentChapter > 1) {
         await selectChapter(currentChapter - 1);
+        // O scroll para o topo já é feito dentro de selectChapter()
     }
 }
 
@@ -477,6 +486,7 @@ async function navigateToNextChapter() {
     const totalChapters = book.totalChapters;
     if (currentChapter < totalChapters) {
         await selectChapter(currentChapter + 1);
+        // O scroll para o topo já é feito dentro de selectChapter()
     }
 }
 
@@ -493,7 +503,6 @@ document.addEventListener('keydown', function (event) {
     }
 });
 
-
 // Inicializar
 window.addEventListener('load', function () {
     updateBooksGrid();
@@ -502,54 +511,23 @@ window.addEventListener('load', function () {
 
 let emLeitura = false;
 
+// Funcionalidade de ocultar/mostrar menu ao fazer scroll
+let ultimaPosicaoScroll = 0;
 
-
-
-
- let ultimaPosicaoScroll = 0;
-
-  window.addEventListener('scroll', function () {
+window.addEventListener('scroll', function () {
     let posicaoAtual = window.scrollY;
     const menu = document.querySelector('.conteudo');
 
     if (posicaoAtual > ultimaPosicaoScroll) {
-      // Rolando pra baixo → esconde o menu
-      menu.classList.add('oculto');
+        // Rolando pra baixo → esconde o menu
+        menu.classList.add('oculto');
     } else {
-      // Rolando pra cima → mostra o menu
-      menu.classList.remove('oculto');
+        // Rolando pra cima → mostra o menu
+        menu.classList.remove('oculto');
     }
 
     ultimaPosicaoScroll = posicaoAtual;
-  });
-
-document.addEventListener('DOMContentLoaded', () => {
-    const testamentButtons = document.querySelectorAll('.testament-btn');
-    const booksGrid = document.getElementById('booksGrid');
-    const chapterSection = document.getElementById('chapterSection');
-
-    function smoothScrollToElement(element) {
-        const extraOffset = 80; // Ajuste para seu header fixo
-        const elementPosition = element.getBoundingClientRect().top + window.pageYOffset - extraOffset;
-        window.scrollTo({
-            top: elementPosition,
-            behavior: 'smooth'
-        });
-    }
-
-    testamentButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            setTimeout(() => {
-                smoothScrollToElement(booksGrid);
-            }, 300); // atraso para renderização
-        });
-    });
-
-    document.addEventListener('click', e => {
-        if (e.target.classList.contains('book-btn')) {
-            setTimeout(() => {
-                smoothScrollToElement(chapterSection);
-            }, 300); // atraso para renderização
-        }
-    });
 });
+
+// REMOVIDO o código duplicado do DOMContentLoaded que estava no final
+// pois as funcionalidades já estão implementadas nas funções principais

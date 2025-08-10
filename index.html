@@ -17,13 +17,11 @@
 
 <body>
     <a href="#sobre" class="botao-flutuante">⬆</a>
-    <div class="conteudo">
+    <div class="conteudo nav-principal">
        <a class="paginas" href="#sobre">SOBRE A ADMEC</a>
-        <!--<a class="paginas" href="#departamentos">DEPARTAMENTOS</a>-->
-        <a class="paginas" href="https://www.instagram.com/admec.oficial/" target="_blank"
+       <a class="paginas" href="https://www.instagram.com/admec.oficial/" target="_blank"
             rel="noopener noreferrer">NOSSAS REDES</a>
-       <!-- <a class="paginas" href="#agenda">AGENDA E CULTOS</a>-->
-        <a class="paginas" href="#biblia">A MENSAGEM NA ADMEC</a>
+       <a class="paginas" href="#biblia">A MENSAGEM NA ADMEC</a>
     </div>
 
     <main id="sobre" class="apresentacao">
@@ -41,11 +39,10 @@
         </div>
     </main>
 
-    </section>
     <section id="biblia">
-        <div class="container">
+        <div class="container biblia-container">
             <div class="header">
-                <a href="./index.html"><img src="img/40anos.png" class="media-object  img-responsive img-thumbnail"></a>
+                <a href="./index.html"><img src="img/40anos.png" class="media-object img-responsive img-thumbnail"></a>
                 <h1>A mensagem na ADMEC</h1>
                 <p>Distribuição da Bíblia a Mensagem sem fins lucrativos.</p>
                 <p>A Editora Vida é responsável pela publicação da tradução da Bíblia A Mensagem em português.</p>
@@ -55,7 +52,7 @@
                 <div class="nav-section">
                     <div class="nav-title">Escolha um testamento</div>
                     <div class="testament-selector">
-                        <button class="testament-btn active" data-testament="old">Antigo Testamento</button>
+                        <button class="testament-btn active" data-testament="old" href="#booksGrid">Antigo Testamento</button>
                         <button class="testament-btn" data-testament="new">Novo Testamento</button>
                     </div>
                 </div>
@@ -65,16 +62,12 @@
                     <div class="search-box">
                         <input type="text" class="search-input" id="bookSearch" placeholder="Pesquisar livro...">
                     </div>
-                    <div class="books-grid" id="booksGrid">
-                        <!-- Livros serão carregados aqui -->
-                    </div>
+                    <div class="books-grid" id="booksGrid"></div>
                 </div>
 
                 <div class="nav-section" id="chapterSection" style="display:none;">
-                    <div class="nav-title">Capítulos</div>
-                    <div class="chapter-selector" id="chapterSelector">
-                        <!-- Capítulos serão carregados aqui -->
-                    </div>
+                    <div class="nav-title" id="capitulos">Capítulos</div>
+                    <div class="chapter-selector" id="chapterSelector"></div>
                 </div>
             </div>
 
@@ -93,11 +86,12 @@
 
         <script src="script.js"></script>
     </section>
-
-    <footer class="rodape">
+      <footer class="rodape">
   © 2025 — Desenvolvido por 
   <a class="criative" href="https://www.instagram.com/criativedigital_pe"> CRIATIVE DIGITAL<a>.
 </footer>
+
 </body>
+
 
 </html>

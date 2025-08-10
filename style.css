@@ -651,19 +651,20 @@ body {
     gap: 16px; /* múltiplo de 8 */
     justify-content: center;
     align-items: center;
-    padding: 16px;
+    padding: 8px;
     flex-wrap: wrap;
-    background-color: transparent; /* fundo limpo */
+    background-color: #fffafa; /* fundo limpo */
     
 }
 
 .nav-principal .paginas {
-    padding: 8px 16px;
+    padding: 8px 8px;
     border-radius: 8px;
+    border: solid 1px #2b4b3a2a;
     text-decoration: none;
-    color: #155724;
-    font-weight: 500;
-    transition: background-color 0.3s ease;
+    color: #2b4b3a;
+    font-weight: 600;
+    transition: background-color 1s ease;
     
 }
 
@@ -775,3 +776,79 @@ body {
     font-size: 115%;
 }
 
+body {
+    font-family: "Noto Sans", sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* ===== Desktop Navbar ===== */
+.conteudo.nav-principal {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    background: #f5f5f5;
+    padding: 0.5rem;
+}
+
+.conteudo.nav-principal a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 600;
+}
+
+/* ===== Mobile Navbar estilo App ===== */
+.mobile-nav {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .conteudo.nav-principal {
+        display: none;
+    }
+
+    .mobile-nav {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: #fff;
+        border-top: 1px solid #ddd;
+        box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+        padding: 0.3rem 0;
+        transition: transform 0.3s ease;
+        z-index: 999;
+    }
+
+    .mobile-nav a {
+        flex: 1;
+        text-align: center;
+        text-decoration: none;
+        color: #555;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: 0.75rem;
+    }
+
+    .mobile-nav .material-icons {
+        font-size: 1.6rem;
+        line-height: 1;
+    }
+
+    /* Efeito ativo */
+    .mobile-nav a.active {
+        color: #1976d2;
+    }
+    .mobile-nav a.active .material-icons {
+        color: #1976d2;
+    }
+
+    /* Esconder barra ao rolar */
+    .mobile-nav.hidden {
+        transform: translateY(100%);
+    }
+}

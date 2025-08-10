@@ -529,5 +529,3 @@ window.addEventListener('scroll', function () {
     ultimaPosicaoScroll = posicaoAtual;
 });
 
-// REMOVIDO o código duplicado do DOMContentLoaded que estava no final
-// pois as funcionalidades já estão implementadas nas funções principais

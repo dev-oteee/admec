@@ -109,6 +109,16 @@ const bookNames = {
 // Cache para capítulos carregados individualmente
 let chapterCache = new Map();
 
+// --- Helper: rolagem suave considerando header fixo ---
+function smoothScrollToElement(el, extraOffset = 8) {
+    if (!el) return;
+    const header = document.querySelector('.conteudo');
+    const headerHeight = header ? header.offsetHeight : 0;
+    const rect = el.getBoundingClientRect();
+    const absoluteY = window.scrollY + rect.top - headerHeight - extraOffset;
+    window.scrollTo({ top: absoluteY, behavior: 'smooth' });
+}
+
 // Função otimizada para carregar apenas o primeiro capítulo
 async function loadBookInitial(testament, bookKey) {
     const bookId = `${testament}-${bookKey}`;
@@ -250,6 +260,7 @@ document.getElementById('bookSearch').addEventListener('input', function (event)
     });
 });
 
+// Testamento buttons (listeners permanecem os mesmos que você tinha)
 document.querySelectorAll('.testament-btn').forEach(btn => {
     btn.addEventListener('click', function () {
         selectTestament(this.dataset.testament);
@@ -274,6 +285,13 @@ function selectTestament(testament) {
 
     updateBooksGrid();
     updateContent();
+
+    // Rolagem suave até a grade de livros (com ajuste para header fixo)
+    const booksGridEl = document.getElementById('booksGrid');
+    if (booksGridEl) {
+        // pequeno delay para garantir que a grade foi renderizada
+        setTimeout(() => smoothScrollToElement(booksGridEl), 80);
+    }
 }
 
 function updateBooksGrid() {
@@ -310,7 +328,11 @@ async function selectBook(bookKey) {
         currentChapter = null;
 
         updateChapterSelector();
-        document.getElementById('chapterSection').style.display = 'block';
+        const chapterSectionEl = document.getElementById('chapterSection');
+        chapterSectionEl.style.display = 'block';
+
+        // Rolagem suave até a seção de capítulos (ajustada para header fixo)
+        setTimeout(() => smoothScrollToElement(chapterSectionEl), 80);
 
         // Selecionar o primeiro capítulo
         selectChapter(1);
@@ -480,40 +502,8 @@ window.addEventListener('load', function () {
 
 let emLeitura = false;
 
-function lerBiblia() {
-  const texto = document.querySelector('.content').innerText;
 
-  const utter = new SpeechSynthesisUtterance(texto);
-  utter.lang = 'pt-BR';
-  utter.rate = 1.1;
-  utter.pitch = 1;
 
-  const selecionarVoz = () => {
-    const vozes = speechSynthesis.getVoices();
-    const voz = vozes.find(v => v.lang === 'pt-BR');
-    if (voz) utter.voice = voz;
-
-    speechSynthesis.cancel(); // limpa leitura anterior
-    speechSynthesis.speak(utter);
-    emLeitura = true;
-  };
-
-  if (speechSynthesis.getVoices().length === 0) {
-    speechSynthesis.onvoiceschanged = selecionarVoz;
-  } else {
-    selecionarVoz();
-  }
-}
-
-function pausarOuRetomar() {
-  if (!emLeitura) return;
-
-  if (speechSynthesis.paused) {
-    speechSynthesis.resume();
-  } else {
-    speechSynthesis.pause();
-  }
-}
 
 
  let ultimaPosicaoScroll = 0;
@@ -532,4 +522,3 @@ function pausarOuRetomar() {
 
     ultimaPosicaoScroll = posicaoAtual;
   });
-  

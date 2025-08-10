@@ -522,3 +522,34 @@ let emLeitura = false;
 
     ultimaPosicaoScroll = posicaoAtual;
   });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const testamentButtons = document.querySelectorAll('.testament-btn');
+    const booksGrid = document.getElementById('booksGrid');
+    const chapterSection = document.getElementById('chapterSection');
+
+    function smoothScrollToElement(element) {
+        const extraOffset = 80; // Ajuste para seu header fixo
+        const elementPosition = element.getBoundingClientRect().top + window.pageYOffset - extraOffset;
+        window.scrollTo({
+            top: elementPosition,
+            behavior: 'smooth'
+        });
+    }
+
+    testamentButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            setTimeout(() => {
+                smoothScrollToElement(booksGrid);
+            }, 300); // atraso para renderização
+        });
+    });
+
+    document.addEventListener('click', e => {
+        if (e.target.classList.contains('book-btn')) {
+            setTimeout(() => {
+                smoothScrollToElement(chapterSection);
+            }, 300); // atraso para renderização
+        }
+    });
+});

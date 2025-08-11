@@ -805,7 +805,9 @@ body {
     .conteudo.nav-principal {
         display: none;
     }
-
+.botao-flutuante{
+    display: none;
+}
     .mobile-nav {
         display: flex;
         justify-content: space-around;

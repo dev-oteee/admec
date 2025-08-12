@@ -20,62 +20,114 @@ body {
     gap: 12em;
 }
 
-/* NAVBAR */
+
+/* ===== NAVBAR DESKTOP MODERNA ===== */
 .conteudo {
-    font-family: "Kanit", sans-serif;
-    font-weight: 300;
-    font-style: normal;
-    font-size: 100%;
-    background-color: transparent;
-
-    width: 100%;
-    color: #2b4b3a;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 1em;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
-
-.conteudo {
-
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    color: white;
-    background: #2b4b3a;
-    filter: blur(0.3px);
-    z-index: 100;
-    transition: transform 2s ease;
-    box-shadow: 0 2px 20px #2b4b3a25;
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    padding: 1rem 2rem;
+
+    /* Glassmorphism */
+    background: rgba(43, 75, 58, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    /* Aparência premium */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+
+    font-family: "Kanit", sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #fff;
+
+    z-index: 1000;
+    transition: all 0.4s ease;
 }
 
+/* Quando oculto ao rolar */
 .conteudo.oculto {
     transform: translateY(-100%);
+    opacity: 0;
 }
 
-.paginas {
-    padding: 1px 1px;
-    margin: 1px 1px;
+/* Links */
+.conteudo .paginas {
+    position: relative;
     text-decoration: none;
-    color: inherit;
-    cursor: pointer;
+    color: #ffffffcc;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
     transition: all 0.3s ease;
 }
 
-.paginas:hover {
-    color: #2b4b3a;
-    background-color: #080202;
-    padding: px 15px;
-    border-radius: 6px;
-    transform: translateY(5px);
-    box-shadow: 0 1px 5px #20080809;
+/* Hover com underline animado */
+.conteudo .paginas::after {
+    content: "";
+    position: absolute;
+    bottom: 4px;
+    left: 50%;
+    transform: translateX(-50%) scaleX(0);
+    transform-origin: center;
+    width: 80%;
+    height: 2px;
+    background: #ffcc70;
+    transition: transform 0.3s ease;
+    border-radius: 2px;
 }
 
+.conteudo .paginas:hover {
+    color: #ffcc70;
+    border: none;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.conteudo .paginas:hover::after {
+    transform: translateX(-50%) scaleX(1);
+}
+
+/* Estado ativo */
+.conteudo .paginas.ativo {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* Espaçamento para conteúdo não sobrepor a navbar */
+body {
+    padding-top: 70px; /* Altura aproximada da navbar */
+}
+
+/* Animação de entrada suave na rolagem */
+@keyframes fadeSlideDown {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.conteudo {
+    animation: fadeSlideDown 0.6s ease forwards;
+}
+
+
+/* Classe que esconde a navbar */
+.conteudo.oculto {
+    transform: translateY(-120%); /* garante que fique totalmente fora da viewport */
+    opacity: 0;
+    pointer-events: none; /* evita que clique em algo invisível */
+}
+
+/* Ajuste de segurança: se houver outra regra que sobrescreva,
+   certifique-se de não usar !important aqui; prefira limpar regras duplicadas */
 
 .apresentacao {
     flex: 1;
@@ -112,25 +164,7 @@ body {
     line-height: 1.6;
 }
 
-.rodape {
-    all: unset;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: #222;
-    color: #fff;
-    text-align: center;
-    padding: 10px;
-    font-size: 10px;
-}
 
-.criative {
-    text-decoration: none;
-    color: inherit;
-    font-weight: 500;
-    font-size: 115%;
-}
 
 /* DISPOSITIVOS MOVEIS */
 @media (max-width: 768px) {
@@ -175,35 +209,34 @@ body {
 
 .botao-flutuante {
     position: fixed;
-    right: 30px;
-    /* Distância da lateral */
-    bottom: 50px;
-    /* Distância do rodapé */
-    background: #2b4b3a;
-    /* Cor de fundo */
-    color: #fdfdfd;
-    /* Cor do ícone/texto */
-    font-size: 30px;
-    /* Tamanho do ícone/texto */
-    width: 50px;
-    height: 50px;
-    border-radius: 30%;
+    right: 50px; /* mais próximo da borda */
+    bottom: 50px; /* altura ideal para UX */
+    background: linear-gradient(135deg, #2b4b3a, #3a6b55);
+    color: #fff;
+    font-size: 24px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     text-decoration: none;
-    box-shadow: 0 2px 5px #2b4b3a;
-    ;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
     cursor: pointer;
-    transition: background 0.3s ease;
+    transition: all 0.3s ease, opacity 0.3s ease;
     z-index: 9999;
+    opacity: 0.9; /* levemente translúcido para não poluir a visão */
 }
 
 .botao-flutuante:hover {
-    background: #ffffff;
-    /* Cor no hover */
-    color: #2b4b3a;
+    transform: translateY(-4px) scale(1.08);
+    background: linear-gradient(135deg, #357a5b, #4fa57c);
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.3);
+    opacity: 1;
 }
+
+
+
 
 
 
@@ -682,7 +715,7 @@ body {
 }
 
 .apresentacao img {
-    max-width: 300px;
+   max-width: 400px;
     border-radius: 8px;
 }
 
@@ -714,7 +747,7 @@ body {
     border: none;
     background-color: #eee;
     cursor: pointer;
-    font-size: 1rem;
+    font-size: 0,8rem;
 }
 
 .testament-btn.active {
@@ -743,7 +776,9 @@ body {
     .apresentacao img {
         max-width: 80%;
     }
-
+.img{
+    max-width: 80%;
+}
     .testament-selector,
     .chapter-selector {
         justify-content: center;
@@ -757,7 +792,7 @@ body {
 
 .rodape {
     all: unset;
-    position: fixed;
+    
     bottom: 0;
     left: 0;
     width: 100%;
@@ -803,12 +838,13 @@ body {
 
 @media (max-width: 768px) {
     .conteudo.nav-principal {
-        display: none;
+                display: none;
     }
 .botao-flutuante{
     display: none;
 }
     .mobile-nav {
+        position: fixed;
         display: flex;
         justify-content: space-around;
         align-items: center;
@@ -842,14 +878,11 @@ body {
 
     /* Efeito ativo */
     .mobile-nav a.active {
-        color: #1976d2;
+        color: #2b4b3a;
     }
     .mobile-nav a.active .material-icons {
-        color: #1976d2;
+        color: #2b4b3a;
     }
 
-    /* Esconder barra ao rolar */
-    .mobile-nav.hidden {
-        transform: translateY(100%);
-    }
+   
 }

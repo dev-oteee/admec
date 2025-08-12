@@ -20,7 +20,6 @@ body {
     gap: 12em;
 }
 
-
 /* ===== NAVBAR DESKTOP MODERNA ===== */
 .conteudo {
     position: fixed;
@@ -39,7 +38,7 @@ body {
 
     /* Aparência premium */
     border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
 
     font-family: "Kanit", sans-serif;
     font-size: 1rem;
@@ -50,7 +49,7 @@ body {
     transition: all 0.4s ease;
 }
 
-/* Quando oculto ao rolar */
+/* CORREÇÃO 1: Classe oculto para desktop navbar */
 .conteudo.oculto {
     transform: translateY(-100%);
     opacity: 0;
@@ -99,7 +98,8 @@ body {
 
 /* Espaçamento para conteúdo não sobrepor a navbar */
 body {
-    padding-top: 70px; /* Altura aproximada da navbar */
+    padding-top: 70px;
+    /* Altura aproximada da navbar */
 }
 
 /* Animação de entrada suave na rolagem */
@@ -108,6 +108,7 @@ body {
         transform: translateY(-100%);
         opacity: 0;
     }
+
     100% {
         transform: translateY(0);
         opacity: 1;
@@ -116,14 +117,6 @@ body {
 
 .conteudo {
     animation: fadeSlideDown 0.6s ease forwards;
-}
-
-
-/* Classe que esconde a navbar */
-.conteudo.oculto {
-    transform: translateY(-120%); /* garante que fique totalmente fora da viewport */
-    opacity: 0;
-    pointer-events: none; /* evita que clique em algo invisível */
 }
 
 /* Ajuste de segurança: se houver outra regra que sobrescreva,
@@ -164,8 +157,6 @@ body {
     line-height: 1.6;
 }
 
-
-
 /* DISPOSITIVOS MOVEIS */
 @media (max-width: 768px) {
     .apresentacao {
@@ -187,30 +178,14 @@ body {
     .boasvindas p {
         font-size: 0.95rem;
     }
-
-    .conteudo {
-        border-radius: 0 0 25px 25px;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        background: #2b4b3a;
-        z-index: 1000;
-        transition: transform 4s ease;
-        box-shadow: 0 2px 20px #2b4b3a00;
-
-    }
-
-    .conteudo.oculto {
-        transform: translateY(-100%);
-    }
 }
-
 
 .botao-flutuante {
     position: fixed;
-    right: 50px; /* mais próximo da borda */
-    bottom: 50px; /* altura ideal para UX */
+    right: 50px;
+    /* mais próximo da borda */
+    bottom: 50px;
+    /* altura ideal para UX */
     background: linear-gradient(135deg, #2b4b3a, #3a6b55);
     color: #fff;
     font-size: 24px;
@@ -225,23 +200,19 @@ body {
     cursor: pointer;
     transition: all 0.3s ease, opacity 0.3s ease;
     z-index: 9999;
-    opacity: 0.9; /* levemente translúcido para não poluir a visão */
+    opacity: 0.9;
+    /* levemente translúcido para não poluir a visão */
 }
 
 .botao-flutuante:hover {
     transform: translateY(-4px) scale(1.08);
-    background: linear-gradient(135deg, #357a5b, #4fa57c);
+    border: solid 1px #fffafa;
+    background: linear-gradient(135deg, #ffcc70);
     box-shadow: 0 10px 26px rgba(0, 0, 0, 0.3);
     opacity: 1;
 }
 
-
-
-
-
-
 /* BIBLIA  */
-
 * {
     margin: 0;
     padding: 0;
@@ -672,7 +643,6 @@ body {
     .verse {
         font-size: 0.95em;
     }
-
 }
 
 /* ===== BOAS PRÁTICAS E MOBILE ===== */
@@ -680,13 +650,14 @@ body {
 /* 1. Menu principal */
 .nav-principal {
     display: flex;
-    gap: 16px; /* múltiplo de 8 */
+    gap: 16px;
+    /* múltiplo de 8 */
     justify-content: center;
     align-items: center;
     padding: 8px;
     flex-wrap: wrap;
-    background-color: #fffafa; /* fundo limpo */
-    
+    background-color: #fffafa;
+    /* fundo limpo */
 }
 
 .nav-principal .paginas {
@@ -697,7 +668,6 @@ body {
     color: #2b4b3a;
     font-weight: 600;
     transition: background-color 1s ease;
-    
 }
 
 .nav-principal .paginas:hover {
@@ -715,7 +685,7 @@ body {
 }
 
 .apresentacao img {
-   max-width: 400px;
+    max-width: 400px;
     border-radius: 8px;
 }
 
@@ -747,11 +717,11 @@ body {
     border: none;
     background-color: #eee;
     cursor: pointer;
-    font-size: 0,8rem;
+    font-size: 0, 8rem;
 }
 
 .testament-btn.active {
-    background-color:#2b4b3a;
+    background-color: #2b4b3a;
 }
 
 .search-input {
@@ -776,9 +746,11 @@ body {
     .apresentacao img {
         max-width: 80%;
     }
-.img{
-    max-width: 80%;
-}
+
+    .img {
+        max-width: 80%;
+    }
+
     .testament-selector,
     .chapter-selector {
         justify-content: center;
@@ -789,10 +761,9 @@ body {
     }
 }
 
-
 .rodape {
     all: unset;
-    
+
     bottom: 0;
     left: 0;
     width: 100%;
@@ -836,13 +807,20 @@ body {
     display: none;
 }
 
+/* CORREÇÃO 2: Classe hidden para mobile nav */
+.mobile-nav.hidden {
+    transform: translateY(100%);
+}
+
 @media (max-width: 768px) {
     .conteudo.nav-principal {
-                display: none;
+        display: none;
     }
-.botao-flutuante{
-    display: none;
-}
+
+    .botao-flutuante {
+        display: none;
+    }
+
     .mobile-nav {
         position: fixed;
         display: flex;
@@ -854,7 +832,7 @@ body {
         width: 100%;
         background: #fff;
         border-top: 1px solid #ddd;
-        box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+        box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
         padding: 0.3rem 0;
         transition: transform 0.3s ease;
         z-index: 999;
@@ -880,9 +858,8 @@ body {
     .mobile-nav a.active {
         color: #2b4b3a;
     }
+
     .mobile-nav a.active .material-icons {
         color: #2b4b3a;
     }
-
-   
 }

@@ -528,4 +528,3 @@ window.addEventListener('scroll', function () {
 
     ultimaPosicaoScroll = posicaoAtual;
 });
-
